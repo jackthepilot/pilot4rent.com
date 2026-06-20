@@ -66,7 +66,9 @@ body{
   z-index:10;
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
+  max-width:calc(100vw - 32px);
   padding:7px;
   background:rgba(11,24,41,.78);
   border:1px solid rgba(200,169,110,.22);
@@ -74,7 +76,7 @@ body{
   box-shadow:0 14px 40px rgba(0,0,0,.22);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
-  animation:fadeDown .7s ease both;
+  animation:checklistFadeDown .7s ease both;
 }
 .checklist-nav-label{
   padding:0 12px 0 14px;
@@ -89,6 +91,7 @@ body{
 .checklist-link{
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
   min-height:36px;
   padding:0 16px;
@@ -106,6 +109,7 @@ body{
 }
 .checklist-link::before{
   content:'';
+  flex:0 0 auto;
   width:6px;
   height:6px;
   border:1px solid var(--gold);
@@ -122,6 +126,16 @@ body{
 }
 .checklist-link:focus-visible{
   box-shadow:0 0 0 3px rgba(200,169,110,.16);
+}
+@keyframes checklistFadeDown{
+  from{
+    opacity:0;
+    transform:translate(-50%,-16px);
+  }
+  to{
+    opacity:1;
+    transform:translate(-50%,0);
+  }
 }
 
 /* Layout */
@@ -324,21 +338,42 @@ footer{
 
 @media(max-width:720px){
   .checklist-nav{
-    top:12px;
-    width:calc(100% - 24px);
-    justify-content:center;
+    top:max(12px,env(safe-area-inset-top));
+    left:12px;
+    right:12px;
+    width:auto;
+    max-width:none;
+    transform:none;
+    gap:6px;
+    padding:6px;
     border-radius:16px;
-    padding:7px;
+    animation:checklistMobileFadeDown .7s ease both;
   }
-  .checklist-nav-label{display:none}
+  .checklist-nav-label{
+    display:none;
+  }
   .checklist-link{
-    flex:1;
-    justify-content:center;
-    padding:0 10px;
+    flex:1 1 0;
+    min-width:0;
+    min-height:42px;
+    padding:0 8px;
     font-size:11px;
-    letter-spacing:.08em;
+    letter-spacing:.07em;
+    text-align:center;
   }
-  .wrap{padding-top:108px}
+  .wrap{
+    padding-top:116px;
+  }
+}
+@keyframes checklistMobileFadeDown{
+  from{
+    opacity:0;
+    transform:translateY(-16px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
 @media(max-width:600px){
