@@ -1,436 +1,931 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f2740">
-<title>737NG Mobile Sim Checklist</title>
+<title>737NG Official Checklist</title>
+
 <style>
 :root {
   color-scheme: light dark;
-  --bg: #eef3f7;
+  --bg: #edf3f7;
   --surface: #ffffff;
-  --surface-2: #f7fafc;
+  --surface-2: #f6f9fb;
   --text: #12202f;
-  --muted: #5f6f7f;
+  --muted: #637483;
   --navy: #0f2740;
+  --navy-2: #194b70;
   --blue: #1f5f8b;
-  --line: #d8e1e8;
+  --blue-soft: #dcecf7;
+  --line: #d7e0e7;
   --green: #1f7a45;
-  --green-soft: #e5f5eb;
-  --shadow: 0 8px 24px rgba(15,39,64,.12);
+  --green-soft: #e3f5ea;
+  --amber: #9a5a00;
+  --amber-soft: #fff3da;
+  --red: #b02c2c;
+  --shadow: 0 8px 24px rgba(15, 39, 64, 0.12);
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0c1620;
-    --surface: #132331;
-    --surface-2: #172b3a;
+    --bg: #0b151f;
+    --surface: #132330;
+    --surface-2: #182b39;
     --text: #eef6fb;
     --muted: #b2c1cc;
-    --navy: #091824;
-    --blue: #67b4e8;
+    --navy: #081720;
+    --navy-2: #153e5b;
+    --blue: #72bdec;
+    --blue-soft: #15384c;
     --line: #2b4354;
     --green: #7bd79f;
     --green-soft: #153a29;
-    --shadow: 0 10px 28px rgba(0,0,0,.35);
+    --amber: #ffd17b;
+    --amber-soft: #3b2b12;
+    --red: #ff9292;
+    --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
   }
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
-button, input { font: inherit; }
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
 .app {
-  max-width: 760px;
+  max-width: 900px;
   margin: 0 auto;
   min-height: 100vh;
-  background: var(--bg);
+  padding-bottom: 36px;
 }
+
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
-  background: linear-gradient(135deg, var(--navy), #194b70);
-  color: white;
-  padding: calc(14px + env(safe-area-inset-top)) 16px 14px;
-  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  z-index: 100;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--navy), var(--navy-2));
+  padding:
+    calc(12px + env(safe-area-inset-top))
+    15px
+    12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
 }
-.title-row {
+
+.topline {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
-h1 {
-  margin: 0;
-  font-size: clamp(20px, 5vw, 28px);
-  line-height: 1.1;
+
+.brand {
+  font-size: 19px;
+  font-weight: 950;
+  letter-spacing: 0.02em;
 }
-.sub {
-  opacity: .82;
-  font-size: 12px;
-  margin-top: 5px;
-}
-.progress-wrap {
-  margin-top: 12px;
-}
-.progress-track {
-  height: 10px;
-  background: rgba(255,255,255,.22);
+
+.top-progress {
+  flex: 0 0 auto;
+  min-width: 58px;
+  text-align: center;
+  padding: 7px 10px;
   border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.top-subtitle {
+  margin-top: 3px;
+  font-size: 12px;
+  opacity: 0.84;
+}
+
+.toolbar-wrap {
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  background: var(--bg);
+  padding: 12px 12px 6px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.tab {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: var(--surface);
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.tab.active {
+  color: #ffffff;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.search-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.search-row input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 11px 12px;
+  outline: none;
+}
+
+.clear-search {
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0 14px;
+  font-weight: 900;
+}
+
+main {
+  padding: 6px 12px 20px;
+}
+
+.card,
+.section {
+  margin-bottom: 12px;
   overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
+
+.card {
+  padding: 15px;
+}
+
+.priority {
+  border-left: 5px solid var(--green);
+  background: var(--green-soft);
+}
+
+.warning {
+  border-left: 5px solid var(--amber);
+  background: var(--amber-soft);
+}
+
+.title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 950;
+}
+
+.sub {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.source-line {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.source-badge {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: var(--blue);
+  background: var(--blue-soft);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.banner {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.progress {
+  height: 10px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line);
+}
+
 .progress-bar {
-  width: 0%;
+  width: 0;
   height: 100%;
-  background: #79df9f;
-  transition: width .2s ease;
+  background: var(--green);
+  transition: width 0.2s ease;
 }
+
 .progress-text {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
-  margin-top: 6px;
+  gap: 12px;
+  margin-top: 7px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 900;
 }
-.controls {
+
+.actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  padding: 14px 14px 4px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
 }
-.control-btn {
-  min-height: 46px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  border-radius: 12px;
-  font-weight: 750;
-  box-shadow: 0 3px 12px rgba(15,39,64,.07);
+
+@media (min-width: 620px) {
+  .actions {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
-.control-btn:active { transform: translateY(1px); }
-.notice {
-  margin: 10px 14px 14px;
-  padding: 12px 14px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.4;
-}
-.sections {
-  padding: 0 12px calc(28px + env(safe-area-inset-bottom));
-}
-.section {
-  margin: 12px 0;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-.section-header {
-  width: 100%;
+
+.btn {
   border: 0;
-  background: var(--surface);
+  border-radius: 11px;
+  padding: 11px 10px;
+  color: #ffffff;
+  background: var(--blue);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.btn.secondary {
   color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.btn.danger {
+  color: var(--red);
+  background: transparent;
+  border: 1px solid var(--red);
+}
+
+.section-head {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr auto auto;
   align-items: center;
   gap: 10px;
-  padding: 15px 15px;
+  border: 0;
+  padding: 15px;
+  color: var(--text);
+  background: var(--surface);
   text-align: left;
-  font-weight: 850;
-  min-height: 58px;
+  font-weight: 950;
 }
-.section-header .count {
+
+.section-count {
   color: var(--muted);
   font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
 }
+
 .chevron {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: var(--surface-2);
-  transition: transform .2s ease;
+  transition: transform 0.2s ease;
 }
-.section.collapsed .chevron { transform: rotate(-90deg); }
-.section-body {
+
+.section.collapsed .section-body,
+.section.collapsed .section-note {
+  display: none;
+}
+
+.section.collapsed .chevron {
+  transform: rotate(-90deg);
+}
+
+.section-note {
+  padding: 12px 14px;
   border-top: 1px solid var(--line);
+  background: var(--amber-soft);
+  font-size: 12px;
+  line-height: 1.45;
 }
-.section.collapsed .section-body { display: none; }
+
 .item {
+  min-height: 66px;
   display: grid;
   grid-template-columns: 42px 1fr;
   gap: 10px;
   align-items: start;
   padding: 13px 14px;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface);
-  min-height: 66px;
+  border-top: 1px solid var(--line);
 }
-.item:last-child { border-bottom: 0; }
-.item.done { background: var(--green-soft); }
+
+.item.done {
+  background: var(--green-soft);
+}
+
 .check {
-  appearance: none;
-  -webkit-appearance: none;
   width: 30px;
   height: 30px;
-  border: 2px solid #8293a2;
-  border-radius: 9px;
   display: grid;
   place-content: center;
   margin: 2px 0 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #8293a2;
+  border-radius: 9px;
   background: var(--surface);
-  cursor: pointer;
 }
+
 .check::before {
   content: "";
   width: 15px;
   height: 8px;
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
-  transform: rotate(-45deg) scale(0);
-  transition: transform .12s ease;
   margin-top: -2px;
+  border-left: 3px solid #ffffff;
+  border-bottom: 3px solid #ffffff;
+  transform: rotate(-45deg) scale(0);
+  transition: transform 0.12s ease;
 }
+
 .check:checked {
   border-color: var(--green);
   background: var(--green);
 }
-.check:checked::before { transform: rotate(-45deg) scale(1); }
-.item-text { min-width: 0; }
-.item-name {
-  font-weight: 850;
-  letter-spacing: .01em;
-  font-size: 15px;
-  line-height: 1.25;
+
+.check:checked::before {
+  transform: rotate(-45deg) scale(1);
 }
+
+.item-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.item-name {
+  font-size: 15px;
+  font-weight: 950;
+  line-height: 1.3;
+}
+
+.role {
+  flex: 0 0 auto;
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--surface-2);
+  font-size: 10px;
+  font-weight: 950;
+}
+
 .item-action {
   margin-top: 4px;
   color: var(--blue);
-  font-size: 15px;
-  font-weight: 750;
-  line-height: 1.3;
+  font-weight: 850;
+  line-height: 1.35;
 }
+
 .item.done .item-name,
 .item.done .item-action {
   color: var(--green);
 }
-.reset-btn {
-  width: calc(100% - 28px);
-  margin: 4px 14px 24px;
-  min-height: 48px;
-  border: 1px solid #c75a5a;
-  color: #b42e2e;
-  background: transparent;
-  border-radius: 12px;
-  font-weight: 800;
-}
-.footer-note {
-  padding: 0 16px 24px;
-  text-align: center;
+
+.item-note {
+  margin-top: 7px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.45;
 }
-@media (min-width: 680px) {
-  .sections { padding-left: 18px; padding-right: 18px; }
-  .controls { padding-left: 18px; padding-right: 18px; }
-  .notice { margin-left: 18px; margin-right: 18px; }
+
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 9px;
 }
+
+@media (min-width: 560px) {
+  .entry-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.entry-grid input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 10px;
+  color: var(--text);
+  background: var(--surface-2);
+  font-size: 13px;
+  outline: none;
+}
+
+.empty {
+  padding: 28px 16px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.footer-note {
+  padding: 4px 16px 24px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
 @media print {
-  .topbar { position: static; box-shadow: none; }
-  .controls, .notice, .reset-btn { display: none !important; }
-  .section { break-inside: avoid; box-shadow: none; }
-  .section.collapsed .section-body { display: block; }
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .topbar,
+  .toolbar-wrap,
+  .actions,
+  .footer-note {
+    display: none !important;
+  }
+
+  main {
+    max-width: none;
+    padding: 0;
+  }
+
+  .card,
+  .section {
+    box-shadow: none;
+    border-color: #666666;
+    break-inside: avoid;
+  }
+
+  .section.collapsed .section-body,
+  .section.collapsed .section-note {
+    display: block !important;
+  }
+
+  .check {
+    border-color: #000000;
+  }
 }
 </style>
 </head>
+
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="title-row">
-      <div>
-        <h1>737NG Checklist</h1>
-        <div class="sub">Mobile simulator checklist</div>
-      </div>
+    <div class="topline">
+      <div class="brand">737NG OFFICIAL CHECKLIST</div>
+      <div class="top-progress" id="topProgress">0%</div>
     </div>
-    <div class="progress-wrap" aria-live="polite">
-      <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
-      <div class="progress-text">
-        <span id="progressLabel">0 of 0 complete</span>
-        <span id="progressPercent">0%</span>
-      </div>
-    </div>
+    <div class="top-subtitle">B737-800, simulator study checklist</div>
   </header>
 
-  <div class="controls">
-    <button class="control-btn" id="expandAll">Expand all</button>
-    <button class="control-btn" id="collapseAll">Collapse all</button>
+  <div class="toolbar-wrap">
+    <div class="tabs" id="tabs"></div>
+
+    <div class="search-row">
+      <input id="search" type="search" placeholder="Search this checklist">
+      <button class="clear-search" id="clearSearch" type="button">Clear</button>
+    </div>
   </div>
 
-  <div class="notice">
-    Tap the square beside each item. Your progress is saved automatically on this phone.
-  </div>
+  <main>
+    <section class="card priority">
+      <h2 class="title">Official-document priority</h2>
+      <div class="sub">
+        Normal, Electrical Power, Preliminary Preflight, and De-Icing are based on
+        the four uploaded reference documents. Expanded Sim remains supplemental.
+      </div>
+    </section>
 
-  <main class="sections" id="sections"></main>
+    <section class="card">
+      <div class="source-line">
+        <div>
+          <h1 class="title" id="checkTitle"></h1>
+          <div class="sub" id="checkSubtitle"></div>
+        </div>
+        <span class="source-badge" id="checkSource"></span>
+      </div>
 
-  <button class="reset-btn" id="resetAll">Reset entire checklist</button>
+      <div class="banner warning hidden" id="checkBanner"></div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="progress-text">
+        <span id="progressLabel">0 complete</span>
+        <span id="progressPercent">0%</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" id="expandAll" type="button">Expand all</button>
+        <button class="btn secondary" id="collapseAll" type="button">Collapse all</button>
+        <button class="btn secondary" id="printChecklist" type="button">Print</button>
+        <button class="btn danger" id="resetChecklist" type="button">Reset current</button>
+      </div>
+    </section>
+
+    <div id="checklistRoot"></div>
+  </main>
+
   <div class="footer-note">
-    Home simulator / study use only. This is not an approved Boeing or airline operating checklist.
+    Simulator and study use only. Not approved for real aircraft operation.
   </div>
 </div>
 
 <script>
-const checklist = [{"title": "1. POWER UP / PREFLIGHT", "items": [{"name": "BATTERY", "action": "ON"}, {"name": "STANDBY POWER", "action": "AUTO"}, {"name": "GROUND POWER", "action": "ON, if available"}, {"name": "IRS L / R", "action": "NAV"}, {"name": "EMERGENCY EXIT LIGHTS", "action": "ARMED"}, {"name": "WINDOW HEAT", "action": "ON"}, {"name": "EQUIPMENT COOLING", "action": "NORM"}, {"name": "YAW DAMPER", "action": "ON"}, {"name": "POSITION LIGHTS", "action": "STEADY"}, {"name": "FASTEN BELTS", "action": "ON"}, {"name": "APU", "action": "START, then release to ON"}, {"name": "APU GEN 1 / 2", "action": "ON after GEN OFF BUS lights"}, {"name": "MAIN FUEL PUMPS", "action": "ON"}, {"name": "CENTER FUEL PUMPS", "action": "ON only if required, otherwise OFF"}, {"name": "CROSSFEED", "action": "CLOSED"}, {"name": "PACK L / R", "action": "AUTO during preflight"}, {"name": "ISOLATION VALVE", "action": "AUTO"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "APU BLEED", "action": "ON"}, {"name": "RECIRCULATION FANS", "action": "AUTO"}, {"name": "TRIM AIR", "action": "ON"}, {"name": "ENGINE HYDRAULIC PUMPS", "action": "ON"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF before engine start"}, {"name": "FLIGHT DIRECTORS", "action": "ON"}, {"name": "AUTOTHROTTLE", "action": "ARM"}, {"name": "IAS / MACH", "action": "Set V2"}, {"name": "HEADING", "action": "Runway heading or cleared heading"}, {"name": "ALTITUDE", "action": "Initial cleared altitude"}, {"name": "FMC ROUTE / PERFORMANCE", "action": "COMPLETE"}, {"name": "STABILIZER TRIM", "action": "Set from FMC"}]}, {"title": "2. BEFORE ENGINE START", "items": [{"name": "DOORS", "action": "CLOSED"}, {"name": "PARKING BRAKE", "action": "SET"}, {"name": "BEACON", "action": "ON"}, {"name": "PACK L / R", "action": "OFF"}, {"name": "ISOLATION VALVE", "action": "OPEN"}, {"name": "APU BLEED", "action": "ON"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF"}]}, {"title": "3. ENGINE START", "items": [{"name": "ENGINE 2 START SWITCH", "action": "GRD"}, {"name": "ENGINE 2 AT STABLE 20–25% N2", "action": "FUEL CONTROL 2 to IDLE"}, {"name": "ENGINE 2 N1 / N2 / EGT / OIL", "action": "MONITOR"}, {"name": "ENGINE 2 START SWITCH", "action": "Confirm it returns to OFF"}, {"name": "ENGINE 1 START SWITCH", "action": "GRD"}, {"name": "ENGINE 1 AT STABLE 20–25% N2", "action": "FUEL CONTROL 1 to IDLE"}, {"name": "ENGINE 1 N1 / N2 / EGT / OIL", "action": "MONITOR"}, {"name": "ENGINE 1 START SWITCH", "action": "Confirm it returns to OFF"}]}, {"title": "4. AFTER START / TAXI", "items": [{"name": "ENGINE GENERATORS 1 / 2", "action": "ON"}, {"name": "APU BLEED", "action": "OFF"}, {"name": "PACK L / R", "action": "AUTO"}, {"name": "ISOLATION VALVE", "action": "AUTO"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "ON"}, {"name": "PROBE HEAT", "action": "ON"}, {"name": "ENGINE ANTI-ICE", "action": "AS REQUIRED"}, {"name": "APU", "action": "OFF"}, {"name": "FLAPS", "action": "Takeoff setting, often 5"}, {"name": "STABILIZER TRIM", "action": "SET"}, {"name": "FLIGHT CONTROLS", "action": "CHECKED"}, {"name": "AUTOBRAKE", "action": "RTO"}, {"name": "SPEEDBRAKE", "action": "DOWN"}, {"name": "TRANSPONDER / TCAS", "action": "TA/RA"}, {"name": "TAXI LIGHT", "action": "ON"}, {"name": "PARKING BRAKE", "action": "RELEASE"}]}, {"title": "5. BEFORE TAKEOFF", "items": [{"name": "FLAPS", "action": "SET, green light"}, {"name": "TRIM", "action": "SET"}, {"name": "AUTOBRAKE", "action": "RTO"}, {"name": "SPEEDBRAKE", "action": "DOWN"}, {"name": "FLIGHT DIRECTORS", "action": "ON"}, {"name": "AUTOTHROTTLE", "action": "ARM"}, {"name": "ENGINE START SWITCHES", "action": "CONT"}, {"name": "LANDING LIGHTS", "action": "ON"}, {"name": "RUNWAY TURNOFF LIGHTS", "action": "ON"}, {"name": "STROBE", "action": "ON"}, {"name": "RUNWAY / HEADING", "action": "VERIFIED"}]}, {"title": "6. AFTER TAKEOFF / CLIMB", "items": [{"name": "POSITIVE RATE", "action": "GEAR UP"}, {"name": "FLAPS", "action": "RETRACT ON SCHEDULE"}, {"name": "GEAR LEVER", "action": "OFF after retraction"}, {"name": "ENGINE START SWITCHES", "action": "OFF unless required"}, {"name": "LANDING / TURNOFF LIGHTS", "action": "OFF above 10,000 ft"}, {"name": "ALTIMETERS", "action": "STD above transition altitude"}, {"name": "AUTOBRAKE", "action": "OFF"}]}, {"title": "7. CRUISE", "items": [{"name": "PACK L / R", "action": "AUTO"}, {"name": "ISOLATION VALVE", "action": "AUTO"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "APU BLEED / APU", "action": "OFF"}, {"name": "HYDRAULIC PUMPS", "action": "ON"}, {"name": "FUEL", "action": "CHECK balance and quantity"}, {"name": "CENTER FUEL PUMPS", "action": "OFF when tank is low"}, {"name": "PRESSURIZATION", "action": "MONITOR"}, {"name": "ANTI-ICE", "action": "AS REQUIRED"}]}, {"title": "8. DESCENT PREPARATION", "items": [{"name": "ARRIVAL / APPROACH", "action": "LOAD AND CHECK"}, {"name": "VREF", "action": "SET"}, {"name": "MINIMUMS", "action": "SET"}, {"name": "AUTOBRAKE", "action": "2 OR 3"}, {"name": "LANDING ALTITUDE", "action": "SET"}, {"name": "FASTEN BELTS", "action": "ON"}, {"name": "MCP ALTITUDE", "action": "Set as cleared"}, {"name": "ALTIMETERS", "action": "LOCAL below transition level"}, {"name": "LANDING LIGHTS", "action": "ON below 10,000 ft"}, {"name": "ENGINE START SWITCHES", "action": "CONT"}]}, {"title": "9. APPROACH / LANDING", "items": [{"name": "GEAR", "action": "DOWN"}, {"name": "FLAPS", "action": "30 OR 40"}, {"name": "SPEEDBRAKE", "action": "ARMED"}, {"name": "AUTOBRAKE", "action": "SET"}, {"name": "LANDING LIGHTS", "action": "ON"}, {"name": "STROBE", "action": "ON"}, {"name": "GEAR LIGHTS", "action": "THREE GREEN"}, {"name": "LANDING CONFIGURATION", "action": "CONFIRMED"}]}, {"title": "10. AFTER LANDING", "items": [{"name": "SPEEDBRAKE", "action": "DOWN"}, {"name": "FLAPS", "action": "UP"}, {"name": "AUTOBRAKE", "action": "OFF"}, {"name": "ENGINE START SWITCHES", "action": "OFF"}, {"name": "LANDING LIGHTS", "action": "OFF"}, {"name": "STROBE", "action": "OFF"}, {"name": "TAXI LIGHT", "action": "ON"}, {"name": "WEATHER RADAR", "action": "OFF"}, {"name": "TRANSPONDER", "action": "STBY / AUTO"}, {"name": "APU", "action": "START if required at gate"}]}, {"title": "11. SHUTDOWN", "items": [{"name": "PARKING BRAKE", "action": "SET"}, {"name": "APU GEN / GROUND POWER", "action": "ON"}, {"name": "TAXI LIGHT", "action": "OFF"}, {"name": "FUEL CONTROLS 1 / 2", "action": "CUTOFF"}, {"name": "BEACON", "action": "OFF after engines stop"}, {"name": "FUEL PUMPS", "action": "OFF"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF"}, {"name": "PROBE HEAT", "action": "OFF"}, {"name": "WINDOW HEAT", "action": "OFF"}]}, {"title": "12. SECURE AIRCRAFT", "items": [{"name": "ENGINE BLEEDS", "action": "OFF"}, {"name": "PACKS", "action": "OFF"}, {"name": "APU BLEED", "action": "OFF"}, {"name": "IRS L / R", "action": "OFF"}, {"name": "EMERGENCY EXIT LIGHTS", "action": "OFF"}, {"name": "EXTERIOR LIGHTS", "action": "OFF"}, {"name": "APU", "action": "OFF"}, {"name": "BATTERY", "action": "OFF"}]}];
-const STORAGE_KEY = "b737ng_mobile_checklist_v2";
-const COLLAPSE_KEY = "b737ng_mobile_collapsed_v2";
+const CHECKLISTS = {"normal": {"label": "Normal", "title": "OFFICIAL NORMAL CHECKLIST", "subtitle": "B737-800, primary checklist sequence", "source": "Normal Checklist, 30 December 2014, Rev 4", "sections": [{"title": "PREFLIGHT", "items": [{"name": "OXYGEN", "action": "TESTED, 100%", "role": "C/FO"}, {"name": "NAVIGATION TRANSFER / DISPLAY SWITCHES", "action": "NORMAL, AUTO", "role": "FO"}, {"name": "WINDOW HEAT", "action": "ON", "role": "FO"}, {"name": "PRESSURIZATION MODE SELECTOR", "action": "AUTO", "role": "FO"}, {"name": "FLIGHT INSTRUMENTS", "action": "SET AND CROSS-CHECK", "role": "C/FO", "fields": ["Heading", "Altimeter", "In/hPa"]}, {"name": "PARKING BRAKE", "action": "SET", "role": "C"}, {"name": "ENGINE START LEVERS", "action": "CUTOFF", "role": "C"}]}, {"title": "BEFORE START", "items": [{"name": "FLIGHT DECK DOOR", "action": "CLOSED AND LOCKED", "role": "C"}, {"name": "FUEL", "action": "CHECK QUANTITY, PUMPS ON", "role": "FO", "fields": ["Fuel kg"]}, {"name": "PASSENGER SIGNS", "action": "ON", "role": "FO"}, {"name": "DOORS AND WINDOWS", "action": "CLOSED AND LOCKED", "role": "C/FO"}, {"name": "MCP", "action": "SET", "role": "C", "fields": ["V2", "Heading", "Altitude"]}, {"name": "TAKEOFF SPEEDS", "action": "SET AND CROSS-CHECK", "role": "PF/PM", "fields": ["V1", "VR", "V2"]}, {"name": "CDU PREFLIGHT", "action": "COMPLETED", "role": "PF"}, {"name": "RUDDER AND AILERON TRIM", "action": "ZERO", "role": "C"}, {"name": "TAXI AND TAKEOFF BRIEFING", "action": "COMPLETED", "role": "PF"}, {"name": "ANTI-COLLISION LIGHT", "action": "ON", "role": "FO", "note": "This is the beacon item referenced in the simulator checklist."}]}, {"title": "BEFORE TAXI", "items": [{"name": "GENERATORS", "action": "ON", "role": "FO"}, {"name": "PROBE HEAT", "action": "ON", "role": "FO"}, {"name": "ANTI-ICE", "action": "AS REQUIRED", "role": "FO", "fields": ["Setting"]}, {"name": "ISOLATION VALVE", "action": "AUTO", "role": "FO"}, {"name": "ENGINE START SWITCHES", "action": "CONT", "role": "FO"}, {"name": "RECALL", "action": "CHECKED", "role": "C/FO"}, {"name": "AUTOBRAKE", "action": "RTO", "role": "FO"}, {"name": "ENGINE START LEVERS", "action": "IDLE DETENT", "role": "C"}, {"name": "FLIGHT CONTROLS", "action": "CHECKED", "role": "C"}, {"name": "FLAP LEVER", "action": "SET", "role": "FO", "fields": ["Flaps"]}, {"name": "GROUND EQUIPMENT", "action": "CLEAR", "role": "C/FO"}]}, {"title": "BEFORE TAKEOFF", "items": [{"name": "FLAPS", "action": "SET, GREEN LIGHT", "role": "C", "fields": ["Flaps"]}, {"name": "STABILIZER TRIM", "action": "SET", "role": "C", "fields": ["Units"]}]}, {"title": "AFTER TAKEOFF", "items": [{"name": "ENGINE BLEEDS", "action": "ON", "role": "PM"}, {"name": "PACKS", "action": "AUTO", "role": "PM"}, {"name": "LANDING GEAR", "action": "UP AND OFF", "role": "PM"}, {"name": "FLAPS", "action": "UP, NO LIGHTS", "role": "PM"}]}, {"title": "DESCENT", "items": [{"name": "PRESSURIZATION", "action": "LANDING ALTITUDE SET", "role": "PM", "fields": ["Landing altitude"]}, {"name": "RECALL", "action": "CHECKED", "role": "PF/PM"}, {"name": "AUTOBRAKE", "action": "SET", "role": "PM", "fields": ["Setting"]}, {"name": "LANDING DATA", "action": "SET AND CROSS-CHECK", "role": "PF/PM", "fields": ["VREF", "Minimums", "Baro/Radio"]}, {"name": "APPROACH BRIEFING", "action": "COMPLETED", "role": "PF"}]}, {"title": "APPROACH", "items": [{"name": "ALTIMETERS", "action": "SET AND CROSS-CHECK", "role": "PF/PM", "fields": ["Altimeter", "In/hPa"]}]}, {"title": "LANDING", "items": [{"name": "ENGINE START SWITCHES", "action": "CONT", "role": "PF"}, {"name": "SPEEDBRAKE", "action": "ARMED", "role": "PF"}, {"name": "LANDING GEAR", "action": "DOWN", "role": "PF"}, {"name": "FLAPS", "action": "SET, GREEN LIGHT", "role": "PF", "fields": ["Flaps"]}]}, {"title": "SHUTDOWN", "items": [{"name": "FUEL PUMPS", "action": "AUTO / OFF", "role": "FO"}, {"name": "PROBE HEAT", "action": "AUTO / OFF", "role": "FO"}, {"name": "HYDRAULIC PANEL", "action": "SET", "role": "FO"}, {"name": "FLAPS", "action": "UP", "role": "FO"}, {"name": "PARKING BRAKE", "action": "SET AS REQUIRED", "role": "C"}, {"name": "ENGINE START LEVERS", "action": "CUTOFF", "role": "C"}, {"name": "WEATHER RADAR", "action": "OFF", "role": "C/FO"}]}, {"title": "SECURE", "items": [{"name": "IRS SELECTORS", "action": "OFF", "role": "FO"}, {"name": "EMERGENCY EXIT LIGHTS", "action": "OFF", "role": "FO"}, {"name": "WINDOW HEAT", "action": "OFF", "role": "FO"}, {"name": "PACKS", "action": "OFF", "role": "FO"}]}]}, "power": {"label": "Power", "title": "ELECTRICAL POWER UP / DOWN", "subtitle": "Supplementary electrical procedure", "source": "Electrical Power Up and Power Down Procedure, FCOM SP6.1 to SP6.4", "sections": [{"title": "INITIAL ELECTRICAL CONFIGURATION", "items": [{"name": "BATTERY SWITCH", "action": "ON, GUARD CLOSED", "note": "Allow standby flight display alignment to complete before moving the aircraft."}, {"name": "STANDBY POWER SWITCH", "action": "AUTO, GUARD CLOSED"}, {"name": "ALTERNATE FLAPS MASTER SWITCH", "action": "OFF, GUARD CLOSED"}, {"name": "WINDSHIELD WIPERS", "action": "PARK"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF"}, {"name": "LANDING GEAR LEVER", "action": "DOWN", "note": "Confirm green gear lights and no red gear lights."}]}, {"title": "EXTERNAL POWER, WHEN USED", "items": [{"name": "GRD POWER AVAILABLE LIGHT", "action": "ILLUMINATED"}, {"name": "GRD POWER SWITCH", "action": "ON"}, {"name": "SOURCE OFF LIGHTS", "action": "EXTINGUISHED"}, {"name": "TRANSFER BUS OFF LIGHTS", "action": "EXTINGUISHED"}, {"name": "STANDBY PWR OFF LIGHT", "action": "EXTINGUISHED"}]}, {"title": "FIRE / OVERHEAT SYSTEM TEST", "items": [{"name": "FIRE SWITCHES", "action": "IN"}, {"name": "OVERHEAT DETECTOR SWITCHES", "action": "NORMAL"}, {"name": "TEST SWITCH", "action": "HOLD TO FAULT / INOP", "note": "Check master caution, OVHT/DET, FAULT and APU DET INOP indications."}, {"name": "TEST SWITCH", "action": "HOLD TO OVHT / FIRE", "note": "Check fire bell, FIRE WARN, master caution and fire/overheat indications."}, {"name": "MASTER FIRE WARN", "action": "PUSH", "note": "Confirm warning lights extinguish and the bell cancels."}, {"name": "EXTINGUISHER TEST", "action": "CHECK POSITIONS 1 AND 2", "note": "Hold each position and verify the three green test lights."}]}, {"title": "APU POWER", "note": "For extended APU operation, use an AC-powered fuel pump. Center tank pumps should only be used when fuel quantity requires them.", "items": [{"name": "APU", "action": "START"}, {"name": "APU GEN OFF BUS LIGHT", "action": "ILLUMINATED"}, {"name": "APU GENERATOR BUS SWITCHES", "action": "ON"}, {"name": "SOURCE / TRANSFER BUS / STANDBY PWR OFF LIGHTS", "action": "EXTINGUISHED"}, {"name": "APU MAINT / LOW OIL PRESSURE / FAULT / OVERSPEED", "action": "EXTINGUISHED"}, {"name": "WHEEL WELL FIRE WARNING SYSTEM", "action": "TEST", "note": "Check fire warning indications and bell cutout operation."}]}, {"title": "ELECTRICAL POWER DOWN", "note": "Use after the Secure checklist is complete.", "items": [{"name": "APU SWITCH AND / OR GRD POWER SWITCH", "action": "OFF", "note": "When the APU was operating, allow the normal cooldown period before battery shutdown."}, {"name": "BATTERY SWITCH", "action": "OFF"}]}]}, "preliminary": {"label": "Preflight PF", "title": "PRELIMINARY PREFLIGHT - PILOT FLYING", "subtitle": "Initial PF setup and equipment checks", "source": "Preliminary Preflight Procedure, Pilot Flying", "sections": [{"title": "INITIAL SETUP", "items": [{"name": "ELECTRICAL POWER UP", "action": "COMPLETE"}, {"name": "IRS MODE SELECTORS", "action": "OFF, THEN NAV"}, {"name": "VOICE RECORDER SWITCH", "action": "AUTO"}, {"name": "OXYGEN PRESSURE", "action": "SUFFICIENT FOR FLIGHT"}, {"name": "HYDRAULIC QUANTITY", "action": "CHECK, NO REFILL INDICATION"}, {"name": "ENGINE OIL QUANTITY", "action": "CHECK"}]}, {"title": "AFTER CREW CHANGE OR MAINTENANCE", "items": [{"name": "FLIGHT DECK DOOR ACCESS SYSTEM CHECK", "action": "ACCOMPLISH"}, {"name": "ACCESS SYSTEM SWITCH", "action": "NORM"}, {"name": "FLIGHT DECK DOOR", "action": "OPEN"}, {"name": "DOOR LOCK SELECTOR", "action": "AUTO"}, {"name": "EMERGENCY ACCESS CODE", "action": "ENTER"}, {"name": "ENT KEY", "action": "PUSH", "note": "Verify the alert and AUTO UNLK indication."}, {"name": "DOOR LOCK SELECTOR", "action": "DENY, THEN UNLKD"}, {"name": "ACCESS SYSTEM SWITCH", "action": "OFF", "note": "Verify LOCK FAIL indication, then restore and close the guard."}, {"name": "MAINTENANCE DOCUMENTS", "action": "CHECK"}, {"name": "EMERGENCY EQUIPMENT", "action": "CHECK", "note": "Check extinguisher, crash axe, escape ropes, goggles and flashlight."}]}, {"title": "PANELS AND WARNING TESTS", "items": [{"name": "BROADBAND / ELT SWITCH GUARDS", "action": "CLOSED, AS INSTALLED"}, {"name": "ELT / PSEU / GPS / ILS / GLS LIGHTS", "action": "EXTINGUISHED, AS INSTALLED"}, {"name": "SERVICE INTERPHONE SWITCH", "action": "OFF"}, {"name": "ENGINE PANEL", "action": "SET", "note": "Reverser and engine control lights out, EEC switches on."}, {"name": "OXYGEN PANEL", "action": "SET"}, {"name": "PASSENGER OXYGEN SWITCH", "action": "GUARD CLOSED"}, {"name": "PASS OXY ON LIGHT", "action": "EXTINGUISHED"}, {"name": "LANDING GEAR INDICATOR LIGHTS", "action": "EXTINGUISHED"}, {"name": "FLIGHT RECORDER SWITCH", "action": "GUARD CLOSED"}, {"name": "MACH / AIRSPEED WARNING TEST", "action": "PUSH ONE AT A TIME", "note": "Verify the clacker sounds."}, {"name": "STALL WARNING TESTS", "action": "PUSH AND HOLD ONE AT A TIME", "note": "Verify the respective control column shaker."}, {"name": "EMERGENCY EVACUATION ACTIVATION SWITCHES", "action": "GUARD CLOSED"}, {"name": "CIRCUIT BREAKERS, P6 PANEL", "action": "CLOSED"}, {"name": "MANUAL GEAR EXTENSION ACCESS DOOR", "action": "CLOSED"}, {"name": "CIRCUIT BREAKERS, CONTROL STAND P18", "action": "CHECK"}, {"name": "PARKING BRAKE", "action": "AS NEEDED"}]}]}, "deicing": {"label": "De-Icing", "title": "DE-ICING CHECKLIST", "subtitle": "B737-800 de-icing sequence", "source": "De-Icing Checklist, 28 October 2014, Rev 6", "banner": "Do not move the flaps or primary flight controls before de-icing.", "sections": [{"title": "PREFLIGHT", "items": [{"name": "OXYGEN", "action": "TESTED, 100%", "role": "C/FO"}, {"name": "NAVIGATION TRANSFER / DISPLAY SWITCHES", "action": "NORMAL, AUTO", "role": "FO"}, {"name": "WINDOW HEAT", "action": "ON", "role": "FO"}, {"name": "PRESSURIZATION MODE SELECTOR", "action": "AUTO", "role": "FO"}, {"name": "FLIGHT INSTRUMENTS", "action": "SET AND CROSS-CHECK", "role": "C/FO", "fields": ["Heading", "Altimeter", "In/hPa"]}, {"name": "PARKING BRAKE", "action": "SET", "role": "C"}, {"name": "ENGINE START LEVERS", "action": "CUTOFF", "role": "C"}]}, {"title": "BEFORE START", "items": [{"name": "FLIGHT DECK DOOR", "action": "CLOSED AND LOCKED", "role": "C"}, {"name": "FUEL", "action": "CHECK QUANTITY, PUMPS ON", "role": "FO", "fields": ["Fuel kg"]}, {"name": "PASSENGER SIGNS", "action": "ON", "role": "FO"}, {"name": "DOORS AND WINDOWS", "action": "CLOSED AND LOCKED", "role": "C/FO"}, {"name": "MCP", "action": "SET", "role": "C", "fields": ["V2", "Heading", "Altitude"]}, {"name": "TAKEOFF SPEEDS", "action": "SET AND CROSS-CHECK", "role": "PF/PM", "fields": ["V1", "VR", "V2"]}, {"name": "CDU PREFLIGHT", "action": "COMPLETED", "role": "PF"}, {"name": "RUDDER AND AILERON TRIM", "action": "ZERO", "role": "C"}, {"name": "TAXI AND TAKEOFF BRIEFING", "action": "COMPLETED", "role": "PF"}, {"name": "ANTI-COLLISION LIGHT", "action": "ON", "role": "FO"}]}, {"title": "CONFIGURE FOR SPRAY", "items": [{"name": "PARKING BRAKE", "action": "SET", "role": "C"}, {"name": "APU", "action": "AS NEEDED", "role": "FO"}, {"name": "FLAPS", "action": "UP", "role": "FO"}, {"name": "THRUST LEVERS", "action": "IDLE", "role": "C"}, {"name": "STABILIZER TRIM", "action": "SET", "role": "C", "fields": ["Units"]}, {"name": "APU / ENGINE BLEED AIR SWITCHES", "action": "OFF", "role": "FO", "note": "After spraying is complete, wait approximately one minute before restoring bleed air."}]}, {"title": "AFTER DE-ICING", "items": [{"name": "ENGINE START REQUIRED", "action": "APU BLEED ON, COMPLETE ENGINE START", "role": "FO"}, {"name": "ENGINES ALREADY RUNNING", "action": "APU AS NEEDED", "role": "FO"}, {"name": "ENGINE BLEED AIR SWITCHES", "action": "ON", "role": "FO"}, {"name": "NORMAL BEFORE TAXI PROCEDURE", "action": "COMPLETE"}]}, {"title": "BEFORE TAXI", "items": [{"name": "GENERATORS", "action": "ON", "role": "FO"}, {"name": "PROBE HEAT", "action": "ON", "role": "FO"}, {"name": "ANTI-ICE", "action": "AS REQUIRED", "role": "FO", "fields": ["Setting"]}, {"name": "ISOLATION VALVE", "action": "AUTO", "role": "FO"}, {"name": "ENGINE START SWITCHES", "action": "CONT", "role": "FO"}, {"name": "RECALL", "action": "CHECKED", "role": "C/FO"}, {"name": "AUTOBRAKE", "action": "RTO", "role": "FO"}, {"name": "ENGINE START LEVERS", "action": "IDLE DETENT", "role": "C"}, {"name": "FLIGHT CONTROLS", "action": "CHECKED", "role": "C"}, {"name": "FLAP LEVER", "action": "SET", "role": "FO", "fields": ["Flaps"]}, {"name": "GROUND EQUIPMENT", "action": "CLEAR", "role": "C/FO"}]}, {"title": "BEFORE TAKEOFF", "note": "Use the appropriate supplementary procedure when a no-engine-bleed takeoff is required.", "items": [{"name": "FLAPS", "action": "SET, GREEN LIGHT", "role": "C", "fields": ["Flaps"]}, {"name": "STABILIZER TRIM", "action": "SET", "role": "C", "fields": ["Units"]}]}]}, "expanded": {"label": "Expanded Sim", "title": "EXPANDED SIMULATOR FLOW", "subtitle": "Supplemental detail, use after the official checklist", "source": "Earlier 737NG simulator checklist", "banner": "Supplemental flow only. The four uploaded documents take priority.", "sections": [{"title": "1. POWER UP / PREFLIGHT", "items": [{"name": "BATTERY", "action": "ON"}, {"name": "STANDBY POWER", "action": "AUTO"}, {"name": "GROUND POWER", "action": "ON, IF AVAILABLE"}, {"name": "IRS L / R", "action": "NAV"}, {"name": "EMERGENCY EXIT LIGHTS", "action": "ARMED"}, {"name": "WINDOW HEAT", "action": "ON"}, {"name": "EQUIPMENT COOLING", "action": "NORM"}, {"name": "YAW DAMPER", "action": "ON"}, {"name": "POSITION LIGHTS", "action": "STEADY"}, {"name": "FASTEN BELTS", "action": "ON"}, {"name": "APU", "action": "START, THEN RELEASE TO ON"}, {"name": "APU GEN 1 / 2", "action": "ON AFTER GEN OFF BUS LIGHTS"}, {"name": "MAIN FUEL PUMPS", "action": "ON"}, {"name": "CENTER FUEL PUMPS", "action": "ON ONLY IF REQUIRED, OTHERWISE OFF"}, {"name": "CROSSFEED", "action": "CLOSED"}, {"name": "PACK L / R", "action": "AUTO DURING PREFLIGHT"}, {"name": "ISOLATION VALVE", "action": "AUTO"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "APU BLEED", "action": "ON"}, {"name": "RECIRCULATION FANS", "action": "AUTO"}, {"name": "TRIM AIR", "action": "ON"}, {"name": "ENGINE HYDRAULIC PUMPS", "action": "ON"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF BEFORE ENGINE START"}, {"name": "FLIGHT DIRECTORS", "action": "ON"}, {"name": "AUTOTHROTTLE", "action": "ARM"}, {"name": "IAS / MACH", "action": "SET V2"}, {"name": "HEADING", "action": "RUNWAY OR CLEARED HEADING"}, {"name": "ALTITUDE", "action": "INITIAL CLEARED ALTITUDE"}, {"name": "FMC ROUTE / PERFORMANCE", "action": "COMPLETE"}, {"name": "STABILIZER TRIM", "action": "SET FROM FMC"}]}, {"title": "2. BEFORE ENGINE START", "items": [{"name": "DOORS", "action": "CLOSED"}, {"name": "PARKING BRAKE", "action": "SET"}, {"name": "ANTI-COLLISION / BEACON", "action": "ON"}, {"name": "PACK L / R", "action": "OFF"}, {"name": "ISOLATION VALVE", "action": "OPEN"}, {"name": "APU BLEED", "action": "ON"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF"}]}, {"title": "3. ENGINE START", "items": [{"name": "ENGINE 2 START SWITCH", "action": "GRD"}, {"name": "ENGINE 2 AT STABLE 20-25% N2", "action": "FUEL CONTROL 2 TO IDLE"}, {"name": "ENGINE 2 N1 / N2 / EGT / OIL", "action": "MONITOR"}, {"name": "ENGINE 2 START SWITCH", "action": "CONFIRM RETURNS TO OFF"}, {"name": "ENGINE 1 START SWITCH", "action": "GRD"}, {"name": "ENGINE 1 AT STABLE 20-25% N2", "action": "FUEL CONTROL 1 TO IDLE"}, {"name": "ENGINE 1 N1 / N2 / EGT / OIL", "action": "MONITOR"}, {"name": "ENGINE 1 START SWITCH", "action": "CONFIRM RETURNS TO OFF"}]}, {"title": "4. AFTER START / TAXI", "items": [{"name": "ENGINE GENERATORS 1 / 2", "action": "ON"}, {"name": "APU BLEED", "action": "OFF"}, {"name": "PACK L / R", "action": "AUTO"}, {"name": "ISOLATION VALVE", "action": "AUTO"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "ON"}, {"name": "PROBE HEAT", "action": "ON"}, {"name": "ENGINE ANTI-ICE", "action": "AS REQUIRED"}, {"name": "APU", "action": "OFF"}, {"name": "FLAPS", "action": "TAKEOFF SETTING"}, {"name": "STABILIZER TRIM", "action": "SET"}, {"name": "FLIGHT CONTROLS", "action": "CHECKED"}, {"name": "AUTOBRAKE", "action": "RTO"}, {"name": "SPEEDBRAKE", "action": "DOWN"}, {"name": "TRANSPONDER / TCAS", "action": "TA/RA"}, {"name": "TAXI LIGHT", "action": "ON"}, {"name": "PARKING BRAKE", "action": "RELEASE"}]}, {"title": "5. BEFORE TAKEOFF", "items": [{"name": "FLAPS", "action": "SET, GREEN LIGHT"}, {"name": "TRIM", "action": "SET"}, {"name": "AUTOBRAKE", "action": "RTO"}, {"name": "SPEEDBRAKE", "action": "DOWN"}, {"name": "FLIGHT DIRECTORS", "action": "ON"}, {"name": "AUTOTHROTTLE", "action": "ARM"}, {"name": "ENGINE START SWITCHES", "action": "CONT"}, {"name": "LANDING LIGHTS", "action": "ON"}, {"name": "RUNWAY TURNOFF LIGHTS", "action": "ON"}, {"name": "STROBE", "action": "ON"}, {"name": "RUNWAY / HEADING", "action": "VERIFIED"}]}, {"title": "6. AFTER TAKEOFF / CLIMB", "items": [{"name": "POSITIVE RATE", "action": "GEAR UP"}, {"name": "FLAPS", "action": "RETRACT ON SCHEDULE"}, {"name": "GEAR LEVER", "action": "OFF AFTER RETRACTION"}, {"name": "ENGINE START SWITCHES", "action": "OFF UNLESS REQUIRED"}, {"name": "LANDING / TURNOFF LIGHTS", "action": "OFF ABOVE 10,000 FT"}, {"name": "ALTIMETERS", "action": "STD ABOVE TRANSITION ALTITUDE"}, {"name": "AUTOBRAKE", "action": "OFF"}]}, {"title": "7. CRUISE", "items": [{"name": "PACK L / R", "action": "AUTO"}, {"name": "ISOLATION VALVE", "action": "AUTO"}, {"name": "ENGINE BLEEDS 1 / 2", "action": "ON"}, {"name": "APU BLEED / APU", "action": "OFF"}, {"name": "HYDRAULIC PUMPS", "action": "ON"}, {"name": "FUEL", "action": "CHECK BALANCE / QUANTITY"}, {"name": "CENTER PUMPS", "action": "OFF WHEN TANK LOW"}, {"name": "PRESSURIZATION", "action": "MONITOR"}, {"name": "ANTI-ICE", "action": "AS REQUIRED"}]}, {"title": "8. DESCENT PREPARATION", "items": [{"name": "ARRIVAL / APPROACH", "action": "LOAD AND CHECK"}, {"name": "VREF", "action": "SET"}, {"name": "MINIMUMS", "action": "SET"}, {"name": "AUTOBRAKE", "action": "2 OR 3"}, {"name": "LANDING ALTITUDE", "action": "SET"}, {"name": "FASTEN BELTS", "action": "ON"}, {"name": "MCP ALTITUDE", "action": "SET AS CLEARED"}, {"name": "ALTIMETERS", "action": "LOCAL BELOW TRANSITION LEVEL"}, {"name": "LANDING LIGHTS", "action": "ON BELOW 10,000 FT"}, {"name": "ENGINE START SWITCHES", "action": "CONT"}]}, {"title": "9. APPROACH / LANDING", "items": [{"name": "GEAR", "action": "DOWN"}, {"name": "FLAPS", "action": "30 OR 40"}, {"name": "SPEEDBRAKE", "action": "ARMED"}, {"name": "AUTOBRAKE", "action": "SET"}, {"name": "LANDING LIGHTS", "action": "ON"}, {"name": "STROBE", "action": "ON"}, {"name": "GEAR LIGHTS", "action": "THREE GREEN"}, {"name": "LANDING CONFIGURATION", "action": "CONFIRMED"}]}, {"title": "10. AFTER LANDING", "items": [{"name": "SPEEDBRAKE", "action": "DOWN"}, {"name": "FLAPS", "action": "UP"}, {"name": "AUTOBRAKE", "action": "OFF"}, {"name": "ENGINE START SWITCHES", "action": "OFF"}, {"name": "LANDING LIGHTS", "action": "OFF"}, {"name": "STROBE", "action": "OFF"}, {"name": "TAXI LIGHT", "action": "ON"}, {"name": "WEATHER RADAR", "action": "OFF"}, {"name": "TRANSPONDER", "action": "STBY / AUTO"}, {"name": "APU", "action": "START IF REQUIRED AT GATE"}]}, {"title": "11. SHUTDOWN", "items": [{"name": "PARKING BRAKE", "action": "SET"}, {"name": "APU GEN / GROUND POWER", "action": "ON"}, {"name": "TAXI LIGHT", "action": "OFF"}, {"name": "FUEL CONTROLS 1 / 2", "action": "CUTOFF"}, {"name": "ANTI-COLLISION / BEACON", "action": "OFF AFTER ENGINES STOP"}, {"name": "FUEL PUMPS", "action": "OFF"}, {"name": "ELECTRIC HYDRAULIC PUMPS", "action": "OFF"}, {"name": "PROBE HEAT", "action": "OFF"}, {"name": "WINDOW HEAT", "action": "OFF"}]}, {"title": "12. SECURE AIRCRAFT", "items": [{"name": "ENGINE BLEEDS", "action": "OFF"}, {"name": "PACKS", "action": "OFF"}, {"name": "APU BLEED", "action": "OFF"}, {"name": "IRS L / R", "action": "OFF"}, {"name": "EMERGENCY EXIT LIGHTS", "action": "OFF"}, {"name": "EXTERIOR LIGHTS", "action": "OFF"}, {"name": "APU", "action": "OFF"}, {"name": "BATTERY", "action": "OFF"}]}]}};
 
-let saved = {};
-let collapsed = {};
+const STORAGE_KEY = "737ngStandaloneOfficialChecklistV1";
+
+let state = {
+  activeChecklist: "normal",
+  checks: {},
+  entries: {}
+};
 
 try {
-  saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-  collapsed = JSON.parse(localStorage.getItem(COLLAPSE_KEY) || "{}");
-} catch (e) {
-  saved = {};
-  collapsed = {};
+  state = Object.assign(
+    state,
+    JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")
+  );
+} catch (error) {
+  console.warn("Could not restore saved checklist state.", error);
 }
 
-const root = document.getElementById("sections");
-let totalItems = 0;
+state.checks = state.checks || {};
+state.entries = state.entries || {};
 
-function itemId(sectionIndex, itemIndex) {
-  return `s${sectionIndex}-i${itemIndex}`;
+if (!CHECKLISTS[state.activeChecklist]) {
+  state.activeChecklist = "normal";
 }
 
-checklist.forEach((section, sIndex) => {
-  const card = document.createElement("section");
-  card.className = "section";
-  if (collapsed[sIndex]) card.classList.add("collapsed");
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => [...document.querySelectorAll(selector)];
 
-  const header = document.createElement("button");
-  header.type = "button";
-  header.className = "section-header";
-  header.setAttribute("aria-expanded", String(!collapsed[sIndex]));
-  header.innerHTML = `
-    <span>${section.title}</span>
-    <span class="count" id="count-${sIndex}">0/${section.items.length}</span>
-    <span class="chevron">⌄</span>
-  `;
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
 
-  const body = document.createElement("div");
-  body.className = "section-body";
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
 
-  section.items.forEach((item, iIndex) => {
-    totalItems++;
-    const id = itemId(sIndex, iIndex);
-    const row = document.createElement("label");
-    row.className = "item";
-    if (saved[id]) row.classList.add("done");
+function itemKey(checklistId, sectionIndex, itemIndex) {
+  return `${checklistId}:${sectionIndex}:${itemIndex}`;
+}
 
-    row.innerHTML = `
-      <input class="check" type="checkbox" id="${id}" ${saved[id] ? "checked" : ""}>
-      <span class="item-text">
-        <span class="item-name">${item.name}</span>
-        <span class="item-action">${item.action}</span>
-      </span>
-    `;
+function renderTabs() {
+  $("#tabs").innerHTML = Object.entries(CHECKLISTS)
+    .map(([id, checklist]) => `
+      <button
+        type="button"
+        class="tab ${id === state.activeChecklist ? "active" : ""}"
+        data-tab="${escapeHtml(id)}"
+      >
+        ${escapeHtml(checklist.label)}
+      </button>
+    `)
+    .join("");
 
-    const checkbox = row.querySelector("input");
-    checkbox.addEventListener("change", () => {
-      saved[id] = checkbox.checked;
-      row.classList.toggle("done", checkbox.checked);
-      saveProgress();
-      updateProgress();
+  $$("[data-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeChecklist = button.dataset.tab;
+      saveState();
+      $("#search").value = "";
+      renderChecklist();
     });
-
-    body.appendChild(row);
   });
-
-  header.addEventListener("click", () => {
-    card.classList.toggle("collapsed");
-    const isCollapsed = card.classList.contains("collapsed");
-    collapsed[sIndex] = isCollapsed;
-    header.setAttribute("aria-expanded", String(!isCollapsed));
-    saveCollapsed();
-  });
-
-  card.appendChild(header);
-  card.appendChild(body);
-  root.appendChild(card);
-});
-
-function saveProgress() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(saved)); } catch (e) {}
 }
 
-function saveCollapsed() {
-  try { localStorage.setItem(COLLAPSE_KEY, JSON.stringify(collapsed)); } catch (e) {}
+function getProgress(checklistId) {
+  const checklist = CHECKLISTS[checklistId];
+  const savedChecks = state.checks[checklistId] || {};
+
+  let total = 0;
+  let complete = 0;
+
+  checklist.sections.forEach((section, sectionIndex) => {
+    section.items.forEach((item, itemIndex) => {
+      total += 1;
+
+      if (savedChecks[itemKey(checklistId, sectionIndex, itemIndex)]) {
+        complete += 1;
+      }
+    });
+  });
+
+  return {
+    total,
+    complete,
+    percent: total ? Math.round((complete / total) * 100) : 0
+  };
+}
+
+function renderChecklist() {
+  renderTabs();
+
+  const checklistId = state.activeChecklist;
+  const checklist = CHECKLISTS[checklistId];
+  const savedChecks =
+    state.checks[checklistId] ||
+    (state.checks[checklistId] = {});
+  const savedEntries =
+    state.entries[checklistId] ||
+    (state.entries[checklistId] = {});
+
+  $("#checkTitle").textContent = checklist.title;
+  $("#checkSubtitle").textContent = checklist.subtitle;
+  $("#checkSource").textContent = checklist.source;
+
+  const banner = $("#checkBanner");
+
+  if (checklist.banner) {
+    banner.textContent = checklist.banner;
+    banner.classList.remove("hidden");
+  } else {
+    banner.textContent = "";
+    banner.classList.add("hidden");
+  }
+
+  $("#checklistRoot").innerHTML = checklist.sections
+    .map((section, sectionIndex) => {
+      const sectionComplete = section.items.filter((item, itemIndex) => {
+        return savedChecks[itemKey(checklistId, sectionIndex, itemIndex)];
+      }).length;
+
+      const sectionNote = section.note
+        ? `<div class="section-note">${escapeHtml(section.note)}</div>`
+        : "";
+
+      const items = section.items
+        .map((item, itemIndex) => {
+          const key = itemKey(checklistId, sectionIndex, itemIndex);
+          const checked = Boolean(savedChecks[key]);
+
+          const fields = (item.fields || [])
+            .map((field, fieldIndex) => {
+              const entryKey = `${key}:field:${fieldIndex}`;
+
+              return `
+                <input
+                  type="text"
+                  class="entry"
+                  data-entry="${escapeHtml(entryKey)}"
+                  value="${escapeHtml(savedEntries[entryKey] || "")}"
+                  placeholder="${escapeHtml(field)}"
+                  aria-label="${escapeHtml(field)}"
+                >
+              `;
+            })
+            .join("");
+
+          return `
+            <div
+              class="item ${checked ? "done" : ""}"
+              data-search-text="${escapeHtml(
+                `${item.name} ${item.action} ${item.role || ""} ${item.note || ""}`.toLowerCase()
+              )}"
+            >
+              <input
+                class="check"
+                type="checkbox"
+                data-check="${escapeHtml(key)}"
+                ${checked ? "checked" : ""}
+                aria-label="Complete ${escapeHtml(item.name)}"
+              >
+
+              <div>
+                <div class="item-top">
+                  <div class="item-name">${escapeHtml(item.name)}</div>
+                  ${
+                    item.role
+                      ? `<span class="role">${escapeHtml(item.role)}</span>`
+                      : ""
+                  }
+                </div>
+
+                <div class="item-action">${escapeHtml(item.action)}</div>
+
+                ${
+                  item.note
+                    ? `<div class="item-note">${escapeHtml(item.note)}</div>`
+                    : ""
+                }
+
+                ${
+                  fields
+                    ? `<div class="entry-grid">${fields}</div>`
+                    : ""
+                }
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      return `
+        <section class="section" data-section="${sectionIndex}">
+          <button class="section-head" type="button">
+            <span>${escapeHtml(section.title)}</span>
+            <span class="section-count">
+              ${sectionComplete}/${section.items.length}
+            </span>
+            <span class="chevron">⌄</span>
+          </button>
+
+          ${sectionNote}
+
+          <div class="section-body">
+            ${items}
+          </div>
+        </section>
+      `;
+    })
+    .join("");
+
+  $$(".section-head").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.closest(".section").classList.toggle("collapsed");
+    });
+  });
+
+  $$("[data-check]").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+      savedChecks[checkbox.dataset.check] = checkbox.checked;
+      saveState();
+      renderChecklist();
+    });
+  });
+
+  $$("[data-entry]").forEach((input) => {
+    input.addEventListener("input", () => {
+      savedEntries[input.dataset.entry] = input.value;
+      saveState();
+    });
+  });
+
+  updateProgress();
+  applySearch();
 }
 
 function updateProgress() {
-  let completed = 0;
+  const progress = getProgress(state.activeChecklist);
 
-  checklist.forEach((section, sIndex) => {
-    let sectionDone = 0;
-    section.items.forEach((item, iIndex) => {
-      if (saved[itemId(sIndex, iIndex)]) {
-        completed++;
-        sectionDone++;
-      }
-    });
-    document.getElementById(`count-${sIndex}`).textContent =
-      `${sectionDone}/${section.items.length}`;
-  });
-
-  const percent = totalItems ? Math.round((completed / totalItems) * 100) : 0;
-  document.getElementById("progressBar").style.width = `${percent}%`;
-  document.getElementById("progressLabel").textContent =
-    `${completed} of ${totalItems} complete`;
-  document.getElementById("progressPercent").textContent = `${percent}%`;
+  $("#progressBar").style.width = `${progress.percent}%`;
+  $("#progressLabel").textContent =
+    `${progress.complete} of ${progress.total} complete`;
+  $("#progressPercent").textContent = `${progress.percent}%`;
+  $("#topProgress").textContent = `${progress.percent}%`;
 }
 
-document.getElementById("expandAll").addEventListener("click", () => {
-  document.querySelectorAll(".section").forEach((card, index) => {
-    card.classList.remove("collapsed");
-    collapsed[index] = false;
-    card.querySelector(".section-header").setAttribute("aria-expanded", "true");
+function applySearch() {
+  const searchTerm = $("#search").value.trim().toLowerCase();
+  let visibleItems = 0;
+
+  $$(".section").forEach((section) => {
+    let visibleInSection = 0;
+
+    section.querySelectorAll(".item").forEach((item) => {
+      const matches =
+        !searchTerm ||
+        item.dataset.searchText.includes(searchTerm);
+
+      item.classList.toggle("hidden", !matches);
+
+      if (matches) {
+        visibleInSection += 1;
+        visibleItems += 1;
+      }
+    });
+
+    section.classList.toggle("hidden", visibleInSection === 0);
   });
-  saveCollapsed();
+
+  let emptyMessage = $("#searchEmpty");
+
+  if (visibleItems === 0 && searchTerm) {
+    if (!emptyMessage) {
+      emptyMessage = document.createElement("div");
+      emptyMessage.id = "searchEmpty";
+      emptyMessage.className = "card empty";
+      emptyMessage.textContent = "No checklist items match your search.";
+      $("#checklistRoot").appendChild(emptyMessage);
+    }
+  } else if (emptyMessage) {
+    emptyMessage.remove();
+  }
+}
+
+$("#search").addEventListener("input", applySearch);
+
+$("#clearSearch").addEventListener("click", () => {
+  $("#search").value = "";
+  applySearch();
+  $("#search").focus();
 });
 
-document.getElementById("collapseAll").addEventListener("click", () => {
-  document.querySelectorAll(".section").forEach((card, index) => {
-    card.classList.add("collapsed");
-    collapsed[index] = true;
-    card.querySelector(".section-header").setAttribute("aria-expanded", "false");
+$("#expandAll").addEventListener("click", () => {
+  $$("#checklistRoot .section").forEach((section) => {
+    section.classList.remove("collapsed");
   });
-  saveCollapsed();
 });
 
-document.getElementById("resetAll").addEventListener("click", () => {
-  if (!confirm("Clear every completed item and start again?")) return;
-  saved = {};
-  document.querySelectorAll(".check").forEach(cb => cb.checked = false);
-  document.querySelectorAll(".item").forEach(row => row.classList.remove("done"));
-  saveProgress();
-  updateProgress();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+$("#collapseAll").addEventListener("click", () => {
+  $$("#checklistRoot .section").forEach((section) => {
+    section.classList.add("collapsed");
+  });
 });
 
-updateProgress();
+$("#printChecklist").addEventListener("click", () => {
+  window.print();
+});
+
+$("#resetChecklist").addEventListener("click", () => {
+  const checklist = CHECKLISTS[state.activeChecklist];
+
+  const confirmed = window.confirm(
+    `Reset all progress and entered values for ${checklist.label}?`
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  state.checks[state.activeChecklist] = {};
+  state.entries[state.activeChecklist] = {};
+  saveState();
+  renderChecklist();
+});
+
+renderChecklist();
 </script>
 </body>
 </html>
