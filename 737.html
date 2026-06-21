@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f2740">
-<title>737NG Checklist</title>
+<title>737NG Training Checklist</title>
 
 <style>
-:root {
-  color-scheme: light dark;
+:root{
+  color-scheme:light dark;
   --bg:#edf3f7;
   --surface:#ffffff;
   --surface-2:#f6f9fb;
@@ -20,12 +20,15 @@
   --line:#d7e0e7;
   --green:#1f7a45;
   --green-soft:#e3f5ea;
+  --yellow:#fff7d6;
+  --yellow-line:#e4bd47;
+  --yellow-text:#56430c;
   --red:#b02c2c;
   --shadow:0 8px 24px rgba(15,39,64,.12);
 }
 
-@media (prefers-color-scheme:dark) {
-  :root {
+@media (prefers-color-scheme:dark){
+  :root{
     --bg:#0b151f;
     --surface:#132330;
     --surface-2:#182b39;
@@ -37,33 +40,33 @@
     --line:#2b4354;
     --green:#7bd79f;
     --green-soft:#153a29;
+    --yellow:#3a3217;
+    --yellow-line:#a8862d;
+    --yellow-text:#ffe89a;
     --red:#ff9292;
     --shadow:0 10px 28px rgba(0,0,0,.35);
   }
 }
 
-* { box-sizing:border-box; }
-
-html { scroll-behavior:smooth; }
-
-body {
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
   margin:0;
   background:var(--bg);
   color:var(--text);
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
 }
+button,input{font:inherit}
+button{cursor:pointer}
 
-button,input { font:inherit; }
-button { cursor:pointer; }
-
-.app {
+.app{
   max-width:900px;
   min-height:100vh;
   margin:0 auto;
-  padding-bottom:30px;
+  padding-bottom:28px;
 }
 
-.sticky-shell {
+.sticky-shell{
   position:sticky;
   top:0;
   z-index:100;
@@ -71,58 +74,59 @@ button { cursor:pointer; }
   box-shadow:0 5px 18px rgba(0,0,0,.22);
 }
 
-.topbar {
+.topbar{
   color:#fff;
   background:linear-gradient(135deg,var(--navy),var(--navy-2));
   padding:calc(10px + env(safe-area-inset-top)) 15px 10px;
 }
 
-.topline {
+.topline{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:12px;
 }
 
-.brand {
+.brand{
+  min-width:0;
   font-size:19px;
   font-weight:950;
   letter-spacing:.02em;
 }
 
-.top-progress {
+.top-progress{
   flex:0 0 auto;
   min-width:58px;
-  text-align:center;
   padding:7px 10px;
   border-radius:999px;
   background:rgba(255,255,255,.15);
+  text-align:center;
   font-size:13px;
   font-weight:950;
 }
 
-.status-card {
+.status-card{
   margin:0;
   padding:9px 12px 11px;
   border-bottom:1px solid var(--line);
   background:var(--surface);
 }
 
-.progress {
+.progress{
   height:9px;
   overflow:hidden;
   border-radius:999px;
   background:var(--line);
 }
 
-.progress-bar {
+.progress-bar{
   width:0;
   height:100%;
   background:var(--green);
   transition:width .2s ease;
 }
 
-.progress-text {
+.progress-text{
   display:flex;
   justify-content:space-between;
   gap:12px;
@@ -131,7 +135,7 @@ button { cursor:pointer; }
   font-weight:900;
 }
 
-.actions {
+.actions{
   width:100%;
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -139,7 +143,7 @@ button { cursor:pointer; }
   margin-top:9px;
 }
 
-.btn {
+.btn{
   width:100%;
   min-width:0;
   border:1px solid var(--line);
@@ -151,15 +155,47 @@ button { cursor:pointer; }
   font-weight:900;
 }
 
-.btn.danger {
-  color:var(--red);
-  background:transparent;
-  border-color:var(--red);
+.btn.primary{
+  color:#fff;
+  border-color:var(--blue);
+  background:var(--blue);
 }
 
-main { padding:12px; }
+.btn.danger{
+  color:var(--red);
+  border-color:var(--red);
+  background:transparent;
+}
 
-.section {
+.search-wrap{
+  display:none;
+  padding:9px 12px 0;
+  background:var(--bg);
+}
+
+.search-wrap.visible{
+  display:block;
+}
+
+.search-input{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:11px 13px;
+  color:var(--text);
+  background:var(--surface);
+  outline:none;
+  box-shadow:var(--shadow);
+}
+
+.search-input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 18%,transparent);
+}
+
+main{padding:12px}
+
+.section{
   margin-bottom:12px;
   overflow:hidden;
   border:1px solid var(--line);
@@ -168,39 +204,61 @@ main { padding:12px; }
   box-shadow:var(--shadow);
 }
 
-.section-head {
-  width:100%;
+.section-head{
   display:grid;
-  grid-template-columns:1fr auto auto;
+  grid-template-columns:1fr auto;
   align-items:center;
   gap:10px;
-  border:0;
   padding:15px;
+  border-bottom:1px solid var(--line);
   color:var(--text);
   background:var(--surface);
-  text-align:left;
   font-weight:950;
+  text-align:left;
 }
 
-.section-count {
+button.section-head{
+  width:100%;
+  grid-template-columns:1fr auto auto;
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  font:inherit;
+  cursor:pointer;
+}
+
+button.section-head:hover{
+  background:var(--surface-2);
+}
+
+.section-count{
   color:var(--muted);
   font-size:12px;
+  white-space:nowrap;
 }
 
-.chevron {
+.section-chevron{
   width:28px;
   height:28px;
   display:grid;
   place-items:center;
-  border-radius:50%;
+  border-radius:999px;
+  color:var(--text);
   background:var(--surface-2);
-  transition:transform .2s ease;
+  font-size:18px;
+  line-height:1;
+  transition:transform .18s ease;
 }
 
-.section.collapsed .section-body { display:none; }
-.section.collapsed .chevron { transform:rotate(-90deg); }
+.section.collapsed .section-body{
+  display:none;
+}
 
-.item {
+.section.collapsed .section-chevron{
+  transform:rotate(-90deg);
+}
+
+.item{
   min-height:66px;
   display:grid;
   grid-template-columns:42px 1fr;
@@ -214,14 +272,18 @@ main { padding:12px; }
   -webkit-tap-highlight-color:transparent;
 }
 
-.item:active { transform:scale(.995); }
+.section-body > .item:first-child{
+  border-top:0;
+}
 
-.item.done {
+.item:active{transform:scale(.995)}
+
+.item.done{
   background:var(--green-soft);
   box-shadow:inset 5px 0 0 var(--green);
 }
 
-.check {
+.check{
   width:30px;
   height:30px;
   display:grid;
@@ -234,7 +296,7 @@ main { padding:12px; }
   background:var(--surface);
 }
 
-.check::before {
+.check::before{
   content:"";
   width:15px;
   height:8px;
@@ -245,29 +307,29 @@ main { padding:12px; }
   transition:transform .12s ease;
 }
 
-.check:checked {
+.check:checked{
   border-color:var(--green);
   background:var(--green);
 }
 
-.check:checked::before {
+.check:checked::before{
   transform:rotate(-45deg) scale(1);
 }
 
-.item-top {
+.item-top{
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
   gap:8px;
 }
 
-.item-name {
+.item-name{
   font-size:15px;
   font-weight:950;
   line-height:1.3;
 }
 
-.role {
+.role{
   flex:0 0 auto;
   padding:3px 7px;
   border:1px solid var(--line);
@@ -278,7 +340,7 @@ main { padding:12px; }
   font-weight:950;
 }
 
-.item-action {
+.item-action{
   margin-top:4px;
   color:var(--blue);
   font-weight:850;
@@ -287,24 +349,24 @@ main { padding:12px; }
 
 .item.done .item-name,
 .item.done .item-action,
-.item.done .role {
+.item.done .role{
   color:var(--green);
 }
 
-.entry-grid {
+.entry-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:7px;
   margin-top:9px;
 }
 
-@media (min-width:560px) {
-  .entry-grid {
+@media (min-width:560px){
+  .entry-grid{
     grid-template-columns:repeat(3,minmax(0,1fr));
   }
 }
 
-.entry-grid input {
+.entry-grid input{
   width:100%;
   min-width:0;
   border:1px solid var(--line);
@@ -316,7 +378,38 @@ main { padding:12px; }
   outline:none;
 }
 
-.footer-note {
+.note{
+  margin:10px 12px;
+  padding:11px 12px;
+  border:1px solid var(--yellow-line);
+  border-left:5px solid var(--yellow-line);
+  border-radius:12px;
+  color:var(--yellow-text);
+  background:var(--yellow);
+}
+
+.note-label{
+  margin-bottom:5px;
+  font-size:11px;
+  font-weight:950;
+  letter-spacing:.06em;
+}
+
+.note-line{
+  margin:3px 0;
+  font-size:13px;
+  font-weight:750;
+  line-height:1.35;
+}
+
+.empty{
+  padding:28px 18px;
+  color:var(--muted);
+  text-align:center;
+  font-weight:800;
+}
+
+.footer-note{
   padding:4px 16px 20px;
   color:var(--muted);
   font-size:11px;
@@ -330,7 +423,7 @@ main { padding:12px; }
   <div class="sticky-shell">
     <header class="topbar">
       <div class="topline">
-        <div class="brand">737NG CHECKLIST</div>
+        <div class="brand" id="brand">737NG CHECKLIST</div>
         <div class="top-progress" id="topProgress">0%</div>
       </div>
     </header>
@@ -345,45 +438,62 @@ main { padding:12px; }
         <span id="progressPercent">0%</span>
       </div>
 
-      <div class="actions">
-        <button class="btn" id="expandAll" type="button">Expand</button>
-        <button class="btn" id="collapseAll" type="button">Collapse</button>
-        <button class="btn danger" id="resetChecklist" type="button">Reset</button>
-      </div>
+      <div class="actions" id="actions"></div>
     </section>
   </div>
 
+  <div class="search-wrap" id="searchWrap">
+    <input class="search-input" id="searchInput" type="search" autocomplete="off">
+  </div>
+
   <main>
-    <div id="checklistRoot"></div>
+    <div id="screenRoot"></div>
   </main>
 
   <div class="footer-note">
-    Training and reference use only. Not approved for aircraft operation.
+    Training aid only. Use the checklist, FCOM and QRH issued by your school or operator.<br>C = Captain · FO = First Officer · PF = Pilot Flying · PM = Pilot Monitoring
   </div>
 </div>
 
 <script>
-const CHECKLISTS = {"unified":{"sections":[{"title":"1. COCKPIT SAFETY AND POWER-UP","items":[{"name":"BATTERY SWITCH","action":"ON, GUARD CLOSED"},{"name":"STANDBY POWER SWITCH","action":"AUTO, GUARD CLOSED"},{"name":"ALTERNATE FLAPS MASTER SWITCH","action":"OFF, GUARD CLOSED"},{"name":"WINDSHIELD WIPERS","action":"PARK"},{"name":"ELECTRIC HYDRAULIC PUMPS","action":"OFF"},{"name":"PARKING BRAKE","action":"SET","role":"C"},{"name":"LANDING GEAR LEVER","action":"DOWN","role":"C"},{"name":"ENGINE START LEVERS","action":"CUTOFF","role":"C"},{"name":"BATTERY","action":"ON","role":"FO"},{"name":"STANDBY POWER","action":"AUTO","role":"FO"},{"name":"ELECTRICAL POWER","action":"ESTABLISH","role":"FO"},{"name":"SOURCE AND TRANSFER BUS LIGHTS","action":"EXTINGUISHED","role":"FO"},{"name":"EMERGENCY LIGHTING","action":"GUARDED / ARMED","role":"FO"},{"name":"IRS MODE SELECTORS","action":"NAV","role":"FO"},{"name":"EQUIPMENT COOLING","action":"NORM","role":"FO"},{"name":"CIRCUIT BREAKERS","action":"CHECKED","role":"C/FO"},{"name":"MAINTENANCE STATUS","action":"REVIEWED","role":"C"},{"name":"GRD POWER AVAILABLE LIGHT","action":"ILLUMINATED"},{"name":"GRD POWER SWITCH","action":"ON"},{"name":"SOURCE OFF LIGHTS","action":"EXTINGUISHED"},{"name":"TRANSFER BUS OFF LIGHTS","action":"EXTINGUISHED"},{"name":"STANDBY PWR OFF LIGHT","action":"EXTINGUISHED"}]},{"title":"2. STANDING PREFLIGHT AND SAFETY INSPECTION","items":[{"name":"OXYGEN","action":"TESTED, SUFFICIENT PRESSURE","role":"C/FO"},{"name":"FLIGHT DECK EMERGENCY EQUIPMENT","action":"CHECKED","role":"C/FO"},{"name":"FIRE AND OVERHEAT TEST","action":"COMPLETE","role":"FO"},{"name":"STALL WARNING TEST","action":"COMPLETE","role":"C/FO"},{"name":"MACH / AIRSPEED WARNING TEST","action":"COMPLETE","role":"C/FO"},{"name":"HYDRAULIC QUANTITY","action":"CHECKED","role":"FO"},{"name":"ENGINE OIL QUANTITY","action":"CHECKED","role":"FO"},{"name":"FLIGHT RECORDER","action":"NORMAL","role":"FO"},{"name":"DOOR WARNING LIGHTS","action":"AS EXPECTED","role":"C/FO"},{"name":"EXTERIOR INSPECTION","action":"COMPLETE","role":"PM"},{"name":"FIRE SWITCHES","action":"IN"},{"name":"OVERHEAT DETECTOR SWITCHES","action":"NORMAL"},{"name":"TEST SWITCH","action":"HOLD TO FAULT / INOP"},{"name":"TEST SWITCH","action":"HOLD TO OVHT / FIRE"},{"name":"MASTER FIRE WARN","action":"PUSH"},{"name":"EXTINGUISHER TEST","action":"CHECK POSITIONS 1 AND 2"},{"name":"ELECTRICAL POWER UP","action":"COMPLETE"},{"name":"IRS MODE SELECTORS","action":"OFF, THEN NAV"},{"name":"VOICE RECORDER SWITCH","action":"AUTO"},{"name":"OXYGEN PRESSURE","action":"SUFFICIENT FOR FLIGHT"},{"name":"HYDRAULIC QUANTITY","action":"CHECK, NO REFILL INDICATION"},{"name":"ENGINE OIL QUANTITY","action":"CHECK"},{"name":"FLIGHT DECK DOOR ACCESS SYSTEM CHECK","action":"ACCOMPLISH"},{"name":"ACCESS SYSTEM SWITCH","action":"NORM"},{"name":"FLIGHT DECK DOOR","action":"OPEN"},{"name":"DOOR LOCK SELECTOR","action":"AUTO"},{"name":"EMERGENCY ACCESS CODE","action":"ENTER"},{"name":"ENT KEY","action":"PUSH"},{"name":"DOOR LOCK SELECTOR","action":"DENY, THEN UNLKD"},{"name":"ACCESS SYSTEM SWITCH","action":"OFF"},{"name":"MAINTENANCE DOCUMENTS","action":"CHECK"},{"name":"EMERGENCY EQUIPMENT","action":"CHECK"},{"name":"BROADBAND / ELT SWITCH GUARDS","action":"CLOSED, AS INSTALLED"},{"name":"ELT / PSEU / GPS / ILS / GLS LIGHTS","action":"EXTINGUISHED, AS INSTALLED"},{"name":"SERVICE INTERPHONE SWITCH","action":"OFF"},{"name":"ENGINE PANEL","action":"SET"},{"name":"OXYGEN PANEL","action":"SET"},{"name":"PASSENGER OXYGEN SWITCH","action":"GUARD CLOSED"},{"name":"PASS OXY ON LIGHT","action":"EXTINGUISHED"},{"name":"LANDING GEAR INDICATOR LIGHTS","action":"EXTINGUISHED"},{"name":"FLIGHT RECORDER SWITCH","action":"GUARD CLOSED"},{"name":"MACH / AIRSPEED WARNING TEST","action":"PUSH ONE AT A TIME"},{"name":"STALL WARNING TESTS","action":"PUSH AND HOLD ONE AT A TIME"},{"name":"EMERGENCY EVACUATION ACTIVATION SWITCHES","action":"GUARD CLOSED"},{"name":"CIRCUIT BREAKERS, P6 PANEL","action":"CLOSED"},{"name":"MANUAL GEAR EXTENSION ACCESS DOOR","action":"CLOSED"},{"name":"CIRCUIT BREAKERS, CONTROL STAND P18","action":"CHECK"},{"name":"PARKING BRAKE","action":"AS NEEDED"},{"name":"OXYGEN","action":"TESTED, 100%","role":"C/FO"},{"name":"NAVIGATION TRANSFER / DISPLAY SWITCHES","action":"NORMAL, AUTO","role":"FO"},{"name":"WINDOW HEAT","action":"ON","role":"FO"},{"name":"PRESSURIZATION MODE SELECTOR","action":"AUTO","role":"FO"},{"name":"FLIGHT INSTRUMENTS","action":"SET AND CROSS-CHECK","role":"C/FO","fields":["Heading","Altimeter","In/hPa"]},{"name":"PARKING BRAKE","action":"SET","role":"C"},{"name":"ENGINE START LEVERS","action":"CUTOFF","role":"C"}]},{"title":"3. OVERHEAD PANEL SETUP","items":[{"name":"YAW DAMPER","action":"ON","role":"FO"},{"name":"FLIGHT CONTROL SWITCHES","action":"GUARDED / ON","role":"FO"},{"name":"ALTERNATE FLAPS","action":"GUARDED / OFF","role":"FO"},{"name":"NAVIGATION TRANSFER SWITCHES","action":"NORMAL","role":"FO"},{"name":"DISPLAY SOURCE / CONTROL PANEL","action":"AUTO / NORMAL","role":"FO"},{"name":"FUEL PUMPS","action":"SET FOR FUEL ON BOARD","role":"FO"},{"name":"CROSSFEED","action":"CLOSED","role":"FO"},{"name":"ELECTRICAL PANEL","action":"SET","role":"FO"},{"name":"WINDOW HEAT","action":"ON","role":"FO"},{"name":"PROBE HEAT","action":"OFF","role":"FO"},{"name":"ENGINE AND WING ANTI-ICE","action":"OFF","role":"FO"},{"name":"HYDRAULIC PUMPS","action":"ENGINE ON, ELECTRIC OFF","role":"FO"},{"name":"AIR-CONDITIONING PACKS","action":"AUTO","role":"FO"},{"name":"RECIRCULATION FANS","action":"AUTO","role":"FO"},{"name":"ISOLATION VALVE","action":"AUTO","role":"FO"},{"name":"ENGINE BLEEDS","action":"ON","role":"FO"},{"name":"TRIM AIR","action":"ON","role":"FO"},{"name":"PRESSURIZATION","action":"AUTO, LANDING ALTITUDE SET","role":"FO"},{"name":"EXTERIOR LIGHTS","action":"AS REQUIRED FOR GATE","role":"FO"},{"name":"PASSENGER SIGNS","action":"SET","role":"FO"},{"name":"IGNITION SELECT SWITCH","action":"IGN L OR IGN R, ALTERNATE EACH FLIGHT","role":"FO"}]},{"title":"4. FMC, ROUTE, AND PERFORMANCE","items":[{"name":"IDENT PAGE","action":"AIRCRAFT AND NAV DATA VERIFIED","role":"PF"},{"name":"IRS POSITION","action":"SET","role":"PF"},{"name":"ROUTE","action":"ENTERED AND VERIFIED","role":"PF/PM"},{"name":"SID AND DEPARTURE RUNWAY","action":"ENTERED AND VERIFIED","role":"PF/PM"},{"name":"ROUTE DISCONTINUITIES","action":"RESOLVED AS REQUIRED","role":"PF"},{"name":"PERFORMANCE INITIALIZATION","action":"COMPLETE","role":"PF"},{"name":"RESERVES AND COST INDEX","action":"ENTERED","role":"PF"},{"name":"CRUISE ALTITUDE","action":"ENTERED","role":"PF"},{"name":"N1 LIMIT","action":"SET","role":"PF"},{"name":"TAKEOFF FLAPS","action":"ENTERED","role":"PF"},{"name":"CG AND STABILIZER TRIM","action":"ENTERED / VERIFIED","role":"PF/PM"},{"name":"V1, VR, V2","action":"SET AND CROSS-CHECKED","role":"PF/PM"},{"name":"LEGS PAGE","action":"ROUTE AND CONSTRAINTS CHECKED","role":"PF/PM"},{"name":"DEPARTURE WEATHER AND NOTICES","action":"REVIEWED","role":"C"},{"name":"TAKEOFF PERFORMANCE","action":"FINAL DATA AVAILABLE","role":"C/FO"}]},{"title":"5. FORWARD PANEL AND MCP SETUP","items":[{"name":"FLIGHT INSTRUMENTS","action":"SET AND CROSS-CHECKED","role":"C/FO"},{"name":"ALTIMETERS","action":"SET AND CROSS-CHECKED","role":"C/FO","fields":["QNH","Elevation"]},{"name":"FLIGHT DIRECTORS","action":"ON, MASTER SIDE SELECTED","role":"C/FO"},{"name":"AUTOTHROTTLE","action":"ARM","role":"C"},{"name":"MCP SPEED","action":"V2","role":"C","fields":["V2"]},{"name":"MCP HEADING","action":"RUNWAY OR CLEARED HEADING","role":"C","fields":["Heading"]},{"name":"MCP ALTITUDE","action":"INITIAL CLEARED ALTITUDE","role":"C","fields":["Altitude"]},{"name":"COURSE SELECTORS","action":"SET AS REQUIRED","role":"C/FO"},{"name":"RADIOS","action":"SET","role":"FO"},{"name":"TRANSPONDER","action":"CODE SET, STANDBY / AUTO","role":"FO"},{"name":"WEATHER RADAR","action":"OFF","role":"C/FO"},{"name":"CLOCKS","action":"SET","role":"C/FO"},{"name":"RUDDER AND AILERON TRIM","action":"ZERO","role":"C"},{"name":"STABILIZER TRIM","action":"SET FOR TAKEOFF","role":"C","fields":["Units"]},{"name":"TAKEOFF BRIEFING","action":"COMPLETE","role":"PF"}]},{"title":"6. BEFORE START","items":[{"name":"APU","action":"START"},{"name":"APU GEN OFF BUS LIGHT","action":"ILLUMINATED"},{"name":"APU GENERATOR BUS SWITCHES","action":"ON"},{"name":"SOURCE / TRANSFER BUS / STANDBY PWR OFF LIGHTS","action":"EXTINGUISHED"},{"name":"APU MAINT / LOW OIL PRESSURE / FAULT / OVERSPEED","action":"EXTINGUISHED"},{"name":"WHEEL WELL FIRE WARNING SYSTEM","action":"TEST"},{"name":"FLIGHT PLAN / CLEARANCE","action":"RECEIVED AND CONFIRMED","role":"C/FO"},{"name":"FINAL LOAD SHEET","action":"RECEIVED AND ACCEPTED","role":"C"},{"name":"WEIGHT AND BALANCE","action":"WITHIN LIMITS","role":"C/FO"},{"name":"TAKEOFF DATA","action":"FINAL AND CROSS-CHECKED","role":"C/FO"},{"name":"CDU PREFLIGHT","action":"COMPLETE","role":"PF/PM"},{"name":"MCP","action":"SET","role":"C"},{"name":"CABIN","action":"SECURE","role":"C"},{"name":"DOORS AND WINDOWS","action":"CLOSED AND LOCKED","role":"C/FO"},{"name":"PASSENGER SIGNS","action":"ON","role":"FO"},{"name":"PARKING BRAKE","action":"SET","role":"C"},{"name":"ANTI-COLLISION LIGHT","action":"ON","role":"FO"},{"name":"FLIGHT DECK DOOR","action":"CLOSED AND LOCKED","role":"C"},{"name":"FUEL","action":"CHECK QUANTITY, PUMPS ON","role":"FO","fields":["Fuel kg"]},{"name":"TAKEOFF SPEEDS","action":"SET AND CROSS-CHECK","role":"PF/PM","fields":["V1","VR","V2"]},{"name":"CDU PREFLIGHT","action":"COMPLETED","role":"PF"},{"name":"RUDDER AND AILERON TRIM","action":"ZERO","role":"C"},{"name":"TAXI AND TAKEOFF BRIEFING","action":"COMPLETED","role":"PF"}]},{"title":"6A. DE-ICING, WHEN REQUIRED","items":[{"name":"PARKING BRAKE","action":"SET","role":"C"},{"name":"APU","action":"AS NEEDED","role":"FO"},{"name":"FLAPS","action":"UP","role":"FO"},{"name":"THRUST LEVERS","action":"IDLE","role":"C"},{"name":"STABILIZER TRIM","action":"SET","role":"C","fields":["Units"]},{"name":"APU / ENGINE BLEED AIR SWITCHES","action":"OFF","role":"FO"},{"name":"ENGINE START REQUIRED","action":"APU BLEED ON, COMPLETE ENGINE START","role":"FO"},{"name":"ENGINES ALREADY RUNNING","action":"APU AS NEEDED","role":"FO"},{"name":"ENGINE BLEED AIR SWITCHES","action":"ON","role":"FO"},{"name":"NORMAL BEFORE TAXI PROCEDURE","action":"COMPLETE"}]},{"title":"7. PUSHBACK AND START","items":[{"name":"PUSHBACK / START REQUEST","action":"MADE","role":"C"},{"name":"PUSHBACK / START CLEARANCE","action":"RECEIVED AND READ BACK","role":"C","fields":["Direction"]},{"name":"TUG AND HEADSET","action":"CONNECTED","role":"C"},{"name":"GROUND-CREW COMMUNICATION","action":"ESTABLISHED","role":"C"},{"name":"STEERING BYPASS PIN","action":"INSTALLED","role":"C"},{"name":"AREA AROUND AIRCRAFT","action":"CLEAR","role":"C/FO"},{"name":"PARKING BRAKE","action":"RELEASE ON COMMAND","role":"C"},{"name":"PUSHBACK","action":"MONITORED","role":"C/FO"},{"name":"ENGINE START","action":"AS CLEARED","role":"C/FO"},{"name":"FINAL LOAD AND PERFORMANCE DATA","action":"RECEIVED AND VERIFIED","role":"C/FO","fields":["ZFW","TOW","CG"]},{"name":"TAKEOFF DATA","action":"FINAL AND CROSS-CHECKED","role":"C/FO","fields":["V1","VR","V2","Trim"]},{"name":"CABIN","action":"SECURE","role":"C"},{"name":"DOORS","action":"CLOSED AND LOCKED","role":"C/FO"},{"name":"PUSHBACK AND START CLEARANCE","action":"RECEIVED","role":"C","fields":["Direction / tail"]},{"name":"TUG AND HEADSET","action":"CONNECTED, COMMUNICATION ESTABLISHED","role":"C"},{"name":"ANTI-COLLISION LIGHT","action":"ON","role":"FO"},{"name":"PARKING BRAKE","action":"RELEASE ON GROUND-CREW COMMAND","role":"C"},{"name":"PUSHBACK","action":"COMMENCED, AREA MONITORED","role":"C/FO"},{"name":"PARKING BRAKE AFTER PUSHBACK","action":"SET ON GROUND-CREW COMMAND","role":"C"},{"name":"TUG","action":"DISCONNECTED AND CLEAR","role":"C"},{"name":"STEERING BYPASS PIN","action":"REMOVED AND SIGHTED","role":"C"},{"name":"GROUND-CREW CLEAR SIGNAL","action":"RECEIVED","role":"C"}]},{"title":"8. ENGINE START","items":[{"name":"APU","action":"RUNNING, GENERATORS ON","role":"FO"},{"name":"PACK SWITCHES","action":"OFF","role":"FO"},{"name":"ISOLATION VALVE","action":"OPEN","role":"FO"},{"name":"ENGINE BLEEDS","action":"ON","role":"FO"},{"name":"APU BLEED","action":"ON","role":"FO"},{"name":"IGNITION SELECT SWITCH","action":"IGN L OR IGN R, ALTERNATE EACH FLIGHT","role":"FO"},{"name":"ENGINE 2 START SWITCH","action":"GRD","role":"FO"},{"name":"ENGINE 2 N2","action":"ROTATION CONFIRMED (2,4,6), STABLE INCREASE","role":"C/FO"},{"name":"ENGINE 2 START LEVER","action":"IDLE AT APPROXIMATELY 25% N2","role":"C"},{"name":"ENGINE 2 PARAMETERS","action":"MONITOR N1, N2, EGT, FUEL FLOW, OIL PRESSURE","role":"C/FO"},{"name":"ENGINE 2 START SWITCH","action":"CONFIRM OFF","role":"FO"},{"name":"ENGINE 1 START SWITCH","action":"GRD","role":"FO"},{"name":"ENGINE 1 N2","action":"ROTATION CONFIRMED (2,4,6), STABLE INCREASE","role":"C/FO"},{"name":"ENGINE 1 START LEVER","action":"IDLE AT APPROXIMATELY 25% N2","role":"C"},{"name":"ENGINE 1 PARAMETERS","action":"MONITOR N1, N2, EGT, FUEL FLOW, OIL PRESSURE","role":"C/FO"},{"name":"ENGINE 1 START SWITCH","action":"CONFIRM OFF","role":"FO"},{"name":"BOTH ENGINES","action":"STABLE AT IDLE","role":"C/FO"},{"name":"PARKING BRAKE","action":"SET","role":"C"},{"name":"ANTI-COLLISION LIGHT","action":"ON","role":"FO"},{"name":"ENGINE BLEED SWITCHES 1 AND 2","action":"ON","role":"FO"},{"name":"ENGINE 2 N2","action":"ROTATION CONFIRMED (2,4,6)","role":"C/FO"},{"name":"ENGINE 2 START","action":"MONITOR N1, N2, EGT AND OIL PRESSURE","role":"C/FO"},{"name":"ENGINE 2 START SWITCH","action":"CONFIRM RETURNS TO OFF","role":"FO"},{"name":"ENGINE 1 N2","action":"ROTATION CONFIRMED (2,4,6)","role":"C/FO"},{"name":"ENGINE 1 START","action":"MONITOR N1, N2, EGT AND OIL PRESSURE","role":"C/FO"},{"name":"ENGINE 1 START SWITCH","action":"CONFIRM RETURNS TO OFF","role":"FO"},{"name":"BOTH ENGINES","action":"STABILIZED AT IDLE","role":"C/FO"}]},{"title":"9. AFTER START","items":[{"name":"PARKING BRAKE","action":"SET ON COMMAND","role":"C"},{"name":"TUG","action":"DISCONNECTED AND CLEAR","role":"C"},{"name":"STEERING BYPASS PIN","action":"REMOVED AND SIGHTED","role":"C"},{"name":"GROUND-CREW CLEAR SIGNAL","action":"RECEIVED","role":"C"},{"name":"ENGINE GENERATORS","action":"ON","role":"FO"},{"name":"PROBE HEAT","action":"ON","role":"FO"},{"name":"ENGINE ANTI-ICE","action":"AS REQUIRED","role":"FO"},{"name":"PACK SWITCHES","action":"AUTO","role":"FO"},{"name":"ISOLATION VALVE","action":"AUTO","role":"FO"},{"name":"APU BLEED","action":"OFF","role":"FO"},{"name":"APU","action":"OFF WHEN NO LONGER REQUIRED","role":"FO"},{"name":"ELECTRIC HYDRAULIC PUMPS","action":"ON","role":"FO"},{"name":"ENGINE START SWITCHES","action":"CONT","role":"FO"},{"name":"RECALL","action":"CHECKED","role":"C/FO"},{"name":"FLAPS","action":"TAKEOFF SETTING","role":"FO","fields":["Flaps"]},{"name":"STABILIZER TRIM","action":"SET","role":"C","fields":["Units"]},{"name":"FLIGHT CONTROLS","action":"FULL, FREE, CORRECT","role":"C"},{"name":"AUTOBRAKE","action":"RTO","role":"FO"},{"name":"SPEEDBRAKE","action":"DOWN DETENT","role":"C"},{"name":"TRANSPONDER / TCAS","action":"TA/RA OR AUTO AS EQUIPPED","role":"FO"},{"name":"GENERATORS","action":"ON","role":"FO"},{"name":"ANTI-ICE","action":"AS REQUIRED","role":"FO","fields":["Setting"]},{"name":"ENGINE START LEVERS","action":"IDLE DETENT","role":"C"},{"name":"FLIGHT CONTROLS","action":"CHECKED","role":"C"},{"name":"FLAP LEVER","action":"SET","role":"FO","fields":["Flaps"]},{"name":"GROUND EQUIPMENT","action":"CLEAR","role":"C/FO"}]},{"title":"10. TAXI","items":[{"name":"TAXI CLEARANCE","action":"RECEIVED AND READ BACK","role":"PM"},{"name":"TAXI ROUTE","action":"CONFIRMED","role":"PF/PM"},{"name":"TAXI LIGHT","action":"ON","role":"FO"},{"name":"PARKING BRAKE","action":"RELEASED","role":"C"},{"name":"BRAKES","action":"CHECKED AFTER INITIAL MOVEMENT","role":"C"},{"name":"NOSE-WHEEL STEERING","action":"CHECKED","role":"C"},{"name":"FLIGHT INSTRUMENTS","action":"CHECKED DURING TURNS","role":"C/FO"},{"name":"TAXI SPEED","action":"APPROPRIATE","role":"PF"},{"name":"RUNWAY INCURSION THREATS","action":"MONITORED","role":"PF/PM"},{"name":"BEFORE TAKEOFF CHECKLIST","action":"COMPLETE BEFORE RUNWAY ENTRY","role":"C/FO"}]},{"title":"11. BEFORE TAKEOFF","items":[{"name":"TAKEOFF RUNWAY","action":"VERIFIED","role":"PF/PM","fields":["Runway"]},{"name":"DEPARTURE AND INITIAL ALTITUDE","action":"VERIFIED","role":"PF/PM"},{"name":"FLAPS","action":"SET, GREEN LIGHT","role":"C","fields":["Flaps"]},{"name":"STABILIZER TRIM","action":"SET","role":"C","fields":["Units"]},{"name":"FLIGHT CONTROLS","action":"CHECKED","role":"C"},{"name":"AUTOBRAKE","action":"RTO","role":"FO"},{"name":"SPEEDBRAKE","action":"DOWN","role":"C"},{"name":"ENGINE START SWITCHES","action":"CONT","role":"FO"},{"name":"WEATHER RADAR","action":"ON / TEST COMPLETE","role":"C/FO"},{"name":"TRANSPONDER","action":"TA/RA","role":"FO"},{"name":"LANDING LIGHTS","action":"ON WHEN ENTERING RUNWAY","role":"FO"},{"name":"RUNWAY TURNOFF LIGHTS","action":"ON","role":"FO"},{"name":"STROBE","action":"ON","role":"FO"},{"name":"TAKEOFF CLEARANCE","action":"RECEIVED AND READ BACK","role":"PM"},{"name":"RUNWAY HEADING AND POSITION","action":"CONFIRMED","role":"PF/PM"}]},{"title":"12. TAKEOFF AND INITIAL CLIMB","items":[{"name":"THRUST","action":"SET","role":"PF/PM"},{"name":"TAKEOFF THRUST AND ENGINE PARAMETERS","action":"CHECKED","role":"PM"},{"name":"80 KNOTS","action":"CROSS-CHECK","role":"PF/PM"},{"name":"V1","action":"CALLOUT","role":"PM"},{"name":"ROTATE","action":"CALLOUT AND ROTATION","role":"PM/PF"},{"name":"POSITIVE RATE","action":"GEAR UP","role":"PF/PM"},{"name":"FLIGHT DIRECTOR MODES","action":"CHECKED","role":"PF/PM"},{"name":"400 FEET","action":"ROLL MODE AS REQUIRED","role":"PF"},{"name":"ACCELERATION HEIGHT","action":"FLAPS RETRACT ON SCHEDULE","role":"PF/PM"}]},{"title":"13. AFTER TAKEOFF AND CLIMB","items":[{"name":"LANDING GEAR","action":"UP AND OFF","role":"PM"},{"name":"FLAPS","action":"UP, NO LIGHTS","role":"PM"},{"name":"AUTOBRAKE","action":"OFF","role":"PM"},{"name":"ENGINE START SWITCHES","action":"OFF UNLESS REQUIRED","role":"PM"},{"name":"ENGINE BLEEDS","action":"ON","role":"PM"},{"name":"PACKS","action":"AUTO","role":"PM"},{"name":"PRESSURIZATION","action":"CHECKED","role":"PM"},{"name":"ALTIMETERS","action":"STANDARD ABOVE TRANSITION ALTITUDE","role":"PF/PM"},{"name":"LANDING AND TURNOFF LIGHTS","action":"OFF ABOVE 10,000 FEET","role":"PM"},{"name":"PASSENGER SIGNS","action":"AS REQUIRED","role":"PM"}]},{"title":"14. CRUISE","items":[{"name":"FLIGHT PATH AND AUTOPILOT MODES","action":"MONITORED","role":"PF/PM"},{"name":"FUEL QUANTITY AND BALANCE","action":"MONITORED","role":"PF/PM"},{"name":"CENTER TANK PUMPS","action":"OFF WHEN REQUIRED","role":"PM"},{"name":"ENGINE PARAMETERS","action":"MONITORED","role":"PF/PM"},{"name":"PRESSURIZATION","action":"MONITORED","role":"PM"},{"name":"WEATHER RADAR","action":"AS REQUIRED","role":"PF/PM"},{"name":"ANTI-ICE","action":"AS REQUIRED","role":"PM"},{"name":"ROUTE AND FUEL PROGRESS","action":"CHECKED","role":"PF/PM"},{"name":"ARRIVAL WEATHER AND NOTICES","action":"OBTAINED","role":"PM"},{"name":"APPROACH AND LANDING PERFORMANCE","action":"PREPARED","role":"PF/PM"}]},{"title":"15. DESCENT PREPARATION","items":[{"name":"ARRIVAL AND APPROACH","action":"LOADED AND VERIFIED","role":"PF/PM"},{"name":"APPROACH FREQUENCIES AND COURSES","action":"SET","role":"PF/PM"},{"name":"LANDING RUNWAY","action":"CONFIRMED","role":"PF/PM","fields":["Runway"]},{"name":"LANDING FLAPS","action":"SELECTED","role":"PF/PM","fields":["Flaps"]},{"name":"VREF AND APPROACH SPEED","action":"SET","role":"PF/PM","fields":["VREF","Additive"]},{"name":"MINIMUMS","action":"SET AND CROSS-CHECKED","role":"PF/PM","fields":["Minimums"]},{"name":"AUTOBRAKE","action":"SET","role":"PM","fields":["Setting"]},{"name":"LANDING ALTITUDE","action":"SET","role":"PM","fields":["Altitude"]},{"name":"MISSED APPROACH","action":"REVIEWED","role":"PF/PM"},{"name":"APPROACH BRIEFING","action":"COMPLETE","role":"PF"},{"name":"RECALL","action":"CHECKED","role":"C/FO"},{"name":"PASSENGER SIGNS","action":"ON","role":"PM"},{"name":"PRESSURIZATION","action":"LANDING ALTITUDE SET","role":"PM","fields":["Landing altitude"]},{"name":"LANDING DATA","action":"SET AND CROSS-CHECK","role":"PF/PM","fields":["VREF","Minimums","Baro/Radio"]},{"name":"APPROACH BRIEFING","action":"COMPLETED","role":"PF"}]},{"title":"16. APPROACH","items":[{"name":"ALTIMETERS","action":"LOCAL SETTING, CROSS-CHECKED","role":"PF/PM"},{"name":"LANDING LIGHTS","action":"ON BELOW 10,000 FEET","role":"PM"},{"name":"ENGINE START SWITCHES","action":"CONT","role":"PM"},{"name":"RADIOS AND APPROACH AIDS","action":"IDENTIFIED / VERIFIED","role":"PF/PM"},{"name":"APPROACH MODE","action":"ARMED OR SELECTED AS REQUIRED","role":"PF"},{"name":"SPEEDBRAKE","action":"ARMED","role":"PF"},{"name":"LANDING GEAR","action":"DOWN, THREE GREEN","role":"PF/PM"},{"name":"FLAPS","action":"LANDING SETTING, GREEN LIGHT","role":"PF/PM"},{"name":"LANDING CHECKLIST","action":"COMPLETE","role":"C/FO"},{"name":"STABILIZED APPROACH CRITERIA","action":"MET","role":"PF/PM"},{"name":"ALTIMETERS","action":"SET AND CROSS-CHECK","role":"PF/PM","fields":["Altimeter","In/hPa"]},{"name":"LANDING GEAR","action":"DOWN","role":"PF"},{"name":"FLAPS","action":"SET, GREEN LIGHT","role":"PF","fields":["Flaps"]}]},{"title":"17. LANDING AND ROLLOUT","items":[{"name":"AUTOPILOT","action":"DISCONNECT AS PLANNED","role":"PF"},{"name":"AUTOTHROTTLE","action":"DISCONNECT AS PLANNED","role":"PF"},{"name":"LANDING CLEARANCE","action":"CONFIRMED","role":"PF/PM"},{"name":"SPOILERS","action":"DEPLOYED","role":"PM"},{"name":"REVERSE THRUST","action":"NORMAL","role":"PF/PM"},{"name":"AUTOBRAKE","action":"DISARMED AS EXPECTED","role":"PM"},{"name":"RUNWAY EXIT","action":"SAFE SPEED, CLEARANCE VERIFIED","role":"PF/PM"}]},{"title":"18. AFTER LANDING","items":[{"name":"SPEEDBRAKE","action":"DOWN","role":"PM"},{"name":"FLAPS","action":"UP","role":"PM"},{"name":"AUTOBRAKE","action":"OFF","role":"PM"},{"name":"ENGINE START SWITCHES","action":"OFF","role":"PM"},{"name":"WEATHER RADAR","action":"OFF","role":"PF/PM"},{"name":"TRANSPONDER","action":"AS REQUIRED FOR TAXI","role":"PM"},{"name":"LANDING LIGHTS","action":"OFF","role":"PM"},{"name":"STROBE","action":"OFF","role":"PM"},{"name":"TAXI LIGHT","action":"ON","role":"PM"},{"name":"APU","action":"START WHEN REQUIRED","role":"PM"},{"name":"TAXI CLEARANCE AND GATE","action":"CONFIRMED","role":"PF/PM"}]},{"title":"19. PARKING AND SHUTDOWN","items":[{"name":"PARKING POSITION","action":"CONFIRMED","role":"PF/PM"},{"name":"PARKING BRAKE","action":"SET OR CHOCKS CONFIRMED","role":"C"},{"name":"ELECTRICAL POWER","action":"APU OR GROUND POWER ON BUS","role":"FO"},{"name":"ENGINE START LEVERS","action":"CUTOFF","role":"C"},{"name":"ANTI-COLLISION LIGHT","action":"OFF AFTER ENGINES STOP","role":"FO"},{"name":"FUEL PUMPS","action":"OFF","role":"FO"},{"name":"ELECTRIC HYDRAULIC PUMPS","action":"OFF","role":"FO"},{"name":"PROBE HEAT","action":"OFF","role":"FO"},{"name":"ENGINE AND WING ANTI-ICE","action":"OFF","role":"FO"},{"name":"FLAPS","action":"UP","role":"FO"},{"name":"SPEEDBRAKE","action":"DOWN","role":"C"},{"name":"TRANSPONDER","action":"STANDBY","role":"FO"},{"name":"WEATHER RADAR","action":"OFF","role":"C/FO"},{"name":"PASSENGER SIGNS","action":"OFF AS APPROPRIATE","role":"FO"},{"name":"DOOR WARNING LIGHTS","action":"MONITOR","role":"C/FO"},{"name":"FUEL PUMPS","action":"AUTO / OFF","role":"FO"},{"name":"PROBE HEAT","action":"AUTO / OFF","role":"FO"},{"name":"HYDRAULIC PANEL","action":"SET","role":"FO"},{"name":"PARKING BRAKE","action":"SET AS REQUIRED","role":"C"}]},{"title":"20. SECURE AIRCRAFT","items":[{"name":"IRS MODE SELECTORS","action":"OFF","role":"FO"},{"name":"EMERGENCY EXIT LIGHTS","action":"OFF","role":"FO"},{"name":"WINDOW HEAT","action":"OFF","role":"FO"},{"name":"PACK SWITCHES","action":"OFF","role":"FO"},{"name":"RECIRCULATION FANS","action":"OFF","role":"FO"},{"name":"APU BLEED","action":"OFF","role":"FO"},{"name":"EXTERIOR LIGHTS","action":"OFF","role":"FO"},{"name":"APU","action":"OFF AFTER COOLDOWN","role":"FO"},{"name":"GROUND POWER","action":"DISCONNECT IF REQUIRED","role":"FO"},{"name":"BATTERY","action":"OFF","role":"FO"},{"name":"FLIGHT DECK","action":"SECURE","role":"C/FO"},{"name":"APU SWITCH AND / OR GRD POWER SWITCH","action":"OFF"},{"name":"BATTERY SWITCH","action":"OFF"},{"name":"IRS SELECTORS","action":"OFF","role":"FO"},{"name":"PACKS","action":"OFF","role":"FO"}]}]}};
-const STORAGE_KEY = "737ngSingleOrganizedChecklistV1";
+const APP_DATA = {"checklist":{"title":"737NG CHECKLIST","search":false,"sections":[{"title":"1. ELECTRICAL POWER-UP","entries":[{"type":"item","name":"BATTERY SWITCH","action":"ON, GUARD CLOSED","role":"FO"},{"type":"item","name":"STANDBY POWER SWITCH","action":"AUTO, GUARD CLOSED","role":"FO"},{"type":"item","name":"ALTERNATE FLAPS MASTER SWITCH","action":"OFF, GUARD CLOSED","role":"FO"},{"type":"item","name":"WINDSHIELD WIPER SELECTORS","action":"PARK","role":"FO"},{"type":"item","name":"ELECTRIC HYDRAULIC PUMP SWITCHES","action":"OFF","role":"FO"},{"type":"item","name":"ELECTRICAL POWER SOURCE","action":"ESTABLISHED","role":"C/FO"},{"type":"note","label":"WHEN EXTERNAL POWER IS NOT USED","lines":["Use the No Ground Power / APU Start procedure.","Follow the power-source procedure issued by your school."]}]},{"title":"2. REQUIRED TESTS","entries":[{"type":"note","label":"BEFORE TESTING","lines":["Alert ground personnel before the fire and overheat test."]},{"type":"item","name":"OVERHEAT / FIRE TEST","action":"COMPLETE","role":"C/FO"},{"type":"item","name":"EXTINGUISHER TEST","action":"COMPLETE","role":"C/FO"},{"type":"item","name":"WHEEL WELL FIRE WARNING TEST","action":"COMPLETE","role":"C/FO"},{"type":"item","name":"MACH / AIRSPEED WARNING TEST","action":"COMPLETE","role":"C/FO"},{"type":"item","name":"STALL WARNING TEST","action":"COMPLETE","role":"C/FO"},{"type":"item","name":"FLIGHT DECK ACCESS SYSTEM CHECK","action":"COMPLETE WHEN REQUIRED","role":"C/FO"}]},{"title":"3. PRELIMINARY PREFLIGHT","entries":[{"type":"item","name":"IRS MODE SELECTORS","action":"OFF, THEN NAV","role":"FO"},{"type":"item","name":"VOICE RECORDER SWITCH","action":"AUTO","role":"FO"},{"type":"item","name":"OXYGEN PRESSURE","action":"SUFFICIENT FOR FLIGHT","role":"C/FO"},{"type":"item","name":"HYDRAULIC QUANTITY","action":"CHECKED","role":"C/FO"},{"type":"item","name":"ENGINE OIL QUANTITY","action":"CHECKED","role":"C/FO"},{"type":"item","name":"EMERGENCY EQUIPMENT","action":"CHECKED","role":"C/FO"},{"type":"item","name":"CIRCUIT BREAKER PANELS","action":"CHECKED","role":"C/FO"},{"type":"item","name":"MANUAL GEAR EXTENSION ACCESS DOOR","action":"CLOSED","role":"FO"}]},{"title":"4. PREFLIGHT CHECKLIST","entries":[{"type":"item","name":"OXYGEN","action":"TESTED, 100%","role":"C/FO"},{"type":"item","name":"NAVIGATION TRANSFER AND DISPLAY SWITCHES","action":"NORMAL, AUTO","role":"FO"},{"type":"item","name":"WINDOW HEAT","action":"ON","role":"FO"},{"type":"item","name":"PRESSURIZATION MODE SELECTOR","action":"AUTO","role":"FO"},{"type":"item","name":"FLIGHT INSTRUMENTS","action":"HEADING AND ALTIMETER SET","role":"C/FO","fields":["Heading","Altimeter","In/hPa"]},{"type":"item","name":"PARKING BRAKE","action":"SET","role":"C"},{"type":"item","name":"ENGINE START LEVERS","action":"CUTOFF","role":"C"}]},{"title":"5. BEFORE START CHECKLIST","entries":[{"type":"item","name":"FLIGHT DECK DOOR","action":"CLOSED AND LOCKED","role":"C"},{"type":"item","name":"FUEL","action":"CHECKED, PUMPS ON","role":"FO","fields":["Fuel KGS"]},{"type":"item","name":"PASSENGER SIGNS","action":"ON","role":"FO"},{"type":"item","name":"DOORS AND WINDOWS","action":"CLOSED AND LOCKED","role":"C/FO"},{"type":"item","name":"MCP","action":"SET","role":"C","fields":["V2","Heading","Altitude"]},{"type":"item","name":"TAKEOFF SPEEDS","action":"SET AND CROSS-CHECKED","role":"PF/PM","fields":["V1","VR","V2"]},{"type":"item","name":"CDU PREFLIGHT","action":"COMPLETED","role":"PF"},{"type":"item","name":"RUDDER AND AILERON TRIM","action":"ZERO","role":"C"},{"type":"item","name":"TAXI AND TAKEOFF BRIEFING","action":"COMPLETED","role":"PF"},{"type":"item","name":"ANTI-COLLISION LIGHT","action":"ON","role":"FO"},{"type":"note","label":"COMMUNICATION","lines":["Contact apron, ramp or ground as published.","Request pushback and engine start."]},{"type":"note","label":"GROUND CREW","lines":["Confirm tug and headset connected.","Confirm steering bypass pin installed.","Release parking brake only when instructed."]}]},{"title":"6. ENGINE START PROCEDURE","entries":[{"type":"item","name":"IGNITION SELECT SWITCH","action":"IGN L OR IGN R, ALTERNATE EACH FLIGHT","role":"FO"},{"type":"item","name":"ENGINE 2 START SWITCH","action":"GRD","role":"FO"},{"type":"note","label":"ENGINE 2 START","lines":["At approximately 25% N2, move Engine 2 start lever to IDLE and start the 15-second timer.","Confirm N2 rotation and increasing; call 2, 4, 6.","Monitor N1, N2, EGT, fuel flow and oil pressure."]},{"type":"item","name":"ENGINE 1 START SWITCH","action":"GRD","role":"FO"},{"type":"note","label":"ENGINE 1 START","lines":["At approximately 25% N2, move Engine 1 start lever to IDLE and start the 15-second timer.","Confirm N2 rotation and increasing; call 2, 4, 6.","Monitor N1, N2, EGT, fuel flow and oil pressure."]},{"type":"note","label":"PUSHBACK COMPLETE","lines":["Set parking brake when instructed.","Confirm tug disconnected, bypass pin removed and ground crew clear."]}]},{"title":"7. BEFORE TAXI CHECKLIST","entries":[{"type":"item","name":"GENERATORS","action":"ON","role":"FO"},{"type":"item","name":"PROBE HEAT","action":"ON","role":"FO"},{"type":"item","name":"ANTI-ICE","action":"AS REQUIRED","role":"FO"},{"type":"item","name":"ISOLATION VALVE","action":"AUTO","role":"FO"},{"type":"item","name":"ENGINE START SWITCHES","action":"CONT","role":"FO"},{"type":"item","name":"RECALL","action":"CHECKED","role":"C/FO"},{"type":"item","name":"AUTOBRAKE","action":"RTO","role":"FO"},{"type":"item","name":"ENGINE START LEVERS","action":"IDLE DETENT","role":"C"},{"type":"item","name":"FLIGHT CONTROLS","action":"CHECKED","role":"C"},{"type":"item","name":"FLAP LEVER","action":"TAKEOFF SETTING","role":"FO"},{"type":"note","label":"TAKEOFF FLAPS","lines":["Flaps 5 — Common takeoff setting.","Flaps 1 — When selected by takeoff performance.","Other settings — Use approved takeoff data."]},{"type":"item","name":"GROUND EQUIPMENT","action":"CLEAR","role":"C/FO"},{"type":"note","label":"ATC","lines":["Request taxi clearance.","Confirm the assigned taxi route."]}]},{"title":"8. BEFORE TAKEOFF CHECKLIST","entries":[{"type":"item","name":"FLAPS","action":"TAKEOFF SETTING, GREEN LIGHT","role":"C"},{"type":"item","name":"STABILIZER TRIM","action":"SET","role":"C","fields":["Units"]},{"type":"note","label":"RUNWAY ENTRY","lines":["Confirm takeoff clearance.","Verify the assigned runway before entering."]}]},{"title":"9. AFTER TAKEOFF CHECKLIST","entries":[{"type":"item","name":"ENGINE BLEEDS","action":"ON","role":"PM"},{"type":"item","name":"PACKS","action":"AUTO","role":"PM"},{"type":"item","name":"LANDING GEAR","action":"UP AND OFF","role":"PM"},{"type":"item","name":"FLAPS","action":"UP, NO LIGHTS","role":"PM"}]},{"title":"10. DESCENT CHECKLIST","entries":[{"type":"item","name":"PRESSURIZATION","action":"LANDING ALTITUDE SET","role":"PM","fields":["Landing altitude"]},{"type":"item","name":"RECALL","action":"CHECKED","role":"PF/PM"},{"type":"item","name":"AUTOBRAKE","action":"SET","role":"PM","fields":["Setting"]},{"type":"item","name":"LANDING DATA","action":"SET AND CROSS-CHECKED","role":"PF/PM","fields":["Vref","Mins","Baro/Radio"]},{"type":"item","name":"APPROACH BRIEFING","action":"COMPLETED","role":"PF"}]},{"title":"11. APPROACH CHECKLIST","entries":[{"type":"item","name":"ALTIMETERS","action":"SET AND CROSS-CHECKED","role":"PF/PM","fields":["Setting","In/hPa"]}]},{"title":"12. LANDING CHECKLIST","entries":[{"type":"item","name":"ENGINE START SWITCHES","action":"CONT","role":"PF"},{"type":"item","name":"SPEEDBRAKE","action":"ARMED","role":"PF"},{"type":"item","name":"LANDING GEAR","action":"DOWN","role":"PF"},{"type":"item","name":"FLAPS","action":"SET, GREEN LIGHT","role":"PF"},{"type":"note","label":"LANDING FLAPS","lines":["Flaps 30 — Normal landing.","Flaps 40 — Maximum landing flap / shortest landing distance.","Use approved landing-performance data."]}]},{"title":"13. SHUTDOWN CHECKLIST","entries":[{"type":"item","name":"FUEL PUMPS","action":"OFF, EXCEPT APU SUPPLY PUMP AS REQUIRED","role":"FO"},{"type":"item","name":"PROBE HEAT","action":"AUTO / OFF","role":"FO"},{"type":"item","name":"HYDRAULIC PANEL","action":"SET","role":"FO"},{"type":"item","name":"FLAPS","action":"UP","role":"FO"},{"type":"item","name":"PARKING BRAKE","action":"SET","role":"C"},{"type":"item","name":"ENGINE START LEVERS","action":"CUTOFF","role":"C"},{"type":"item","name":"WEATHER RADAR","action":"OFF","role":"C/FO"}]},{"title":"14. SECURE CHECKLIST","entries":[{"type":"item","name":"IRS MODE SELECTORS","action":"OFF","role":"FO"},{"type":"item","name":"EMERGENCY EXIT LIGHTS","action":"OFF","role":"FO"},{"type":"item","name":"WINDOW HEAT","action":"OFF","role":"FO"},{"type":"item","name":"PACKS","action":"OFF","role":"FO"}]},{"title":"15. ELECTRICAL POWER DOWN","entries":[{"type":"item","name":"APU SWITCH AND / OR GRD POWER SWITCH","action":"OFF","role":"FO"},{"type":"note","label":"IF THE APU WAS OPERATING","lines":["Wait approximately 2 minutes after the APU GEN OFF BUS light extinguishes before selecting the battery OFF."]},{"type":"item","name":"BATTERY SWITCH","action":"OFF","role":"FO"}]}]},"procedures":{"title":"737NG PROCEDURES","search":true,"searchPlaceholder":"Search procedures","sections":[{"title":"DE-ICING","tags":"ice icing spray winter anti ice","entries":[{"type":"note","label":"BEFORE SPRAY","lines":["Do not move the flaps or primary flight controls before de-icing."]},{"type":"item","name":"PARKING BRAKE","action":"SET","role":"C"},{"type":"item","name":"APU","action":"AS NEEDED","role":"FO"},{"type":"item","name":"FLAPS","action":"UP","role":"FO"},{"type":"item","name":"THRUST LEVERS","action":"IDLE","role":"C"},{"type":"item","name":"STABILIZER TRIM","action":"SET","role":"C"},{"type":"item","name":"APU / ENGINE BLEED AIR SWITCHES","action":"OFF","role":"FO"},{"type":"note","label":"AFTER DE-ICING","lines":["Wait approximately one minute before selecting APU or engine bleed air ON.","Continue with the applicable engine-start or Before Taxi procedure."]},{"type":"item","name":"BLEED AIR CONFIGURATION","action":"RESTORED AS APPLICABLE","role":"FO"},{"type":"item","name":"BEFORE TAXI CHECKLIST","action":"COMPLETE","role":"C/FO"}]},{"title":"NO GROUND POWER / APU START","tags":"apu battery no external power cold dark","entries":[{"type":"item","name":"BATTERY SWITCH","action":"ON, GUARD CLOSED","role":"FO"},{"type":"item","name":"STANDBY POWER SWITCH","action":"AUTO, GUARD CLOSED","role":"FO"},{"type":"item","name":"APU SWITCH","action":"START, THEN ON","role":"FO"},{"type":"item","name":"APU GEN OFF BUS LIGHT","action":"ILLUMINATED","role":"FO"},{"type":"item","name":"APU GENERATOR BUS SWITCHES","action":"ON","role":"FO"},{"type":"item","name":"ELECTRICAL BUSES","action":"POWERED","role":"C/FO"}]},{"title":"ELECTRICAL POWER DOWN","tags":"shutdown battery apu ground power secure","entries":[{"type":"item","name":"SECURE CHECKLIST","action":"COMPLETE","role":"C/FO"},{"type":"item","name":"APU SWITCH AND / OR GRD POWER SWITCH","action":"OFF","role":"FO"},{"type":"note","label":"WHEN THE APU WAS OPERATING","lines":["Wait approximately two minutes after APU GEN OFF BUS extinguishes before switching the battery OFF."]},{"type":"item","name":"BATTERY SWITCH","action":"OFF","role":"FO"}]},{"title":"FLIGHT DECK ACCESS SYSTEM CHECK","tags":"door access lock emergency code","entries":[{"type":"item","name":"FLIGHT DECK ACCESS SYSTEM SWITCH","action":"NORM","role":"C/FO"},{"type":"item","name":"FLIGHT DECK DOOR","action":"OPEN","role":"C/FO"},{"type":"item","name":"FLIGHT DECK DOOR LOCK SELECTOR","action":"AUTO","role":"C/FO"},{"type":"item","name":"EMERGENCY ACCESS CODE","action":"ENTER","role":"C/FO"},{"type":"item","name":"ALERT AND AUTO UNLK LIGHT","action":"VERIFY","role":"C/FO"},{"type":"item","name":"LOCK SELECTOR","action":"DENY","role":"C/FO"},{"type":"item","name":"AUTO UNLK LIGHT","action":"VERIFY EXTINGUISHED","role":"C/FO"},{"type":"item","name":"LOCK SELECTOR","action":"UNLKD","role":"C/FO"},{"type":"item","name":"ACCESS SYSTEM SWITCH","action":"OFF","role":"C/FO"},{"type":"item","name":"LOCK FAIL LIGHT","action":"VERIFY ILLUMINATED","role":"C/FO"},{"type":"item","name":"ACCESS SYSTEM SWITCH","action":"GUARD CLOSED","role":"C/FO"}]},{"title":"FIRE / OVERHEAT AND EXTINGUISHER TESTS","tags":"fire overheat extinguisher wheel well test warning","entries":[{"type":"item","name":"OVERHEAT DETECTOR SWITCHES","action":"NORMAL","role":"C/FO"},{"type":"item","name":"TEST SWITCH","action":"HOLD TO FAULT / INOP","role":"C/FO"},{"type":"item","name":"FAULT INDICATIONS","action":"VERIFIED","role":"C/FO"},{"type":"item","name":"TEST SWITCH","action":"HOLD TO OVHT / FIRE","role":"C/FO"},{"type":"item","name":"FIRE BELL AND WARNING LIGHTS","action":"VERIFIED","role":"C/FO"},{"type":"item","name":"MASTER FIRE WARNING LIGHTS","action":"PUSH","role":"C/FO"},{"type":"item","name":"EXTINGUISHER TEST SWITCH","action":"POSITION 1, HOLD AND VERIFY","role":"C/FO"},{"type":"item","name":"EXTINGUISHER TEST SWITCH","action":"POSITION 2, HOLD AND VERIFY","role":"C/FO"},{"type":"item","name":"WHEEL WELL FIRE WARNING SYSTEM","action":"TEST","role":"C/FO"}]}]},"emergencies":{"title":"737NG EMERGENCIES","search":true,"searchPlaceholder":"Search emergencies","sections":[{"title":"ENGINE FIRE / SEVERE DAMAGE / SEPARATION","tags":"engine fire severe damage separation vibration","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"REJECTED TAKEOFF","tags":"rto rejected takeoff runway stop","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"CABIN ALTITUDE WARNING / RAPID DECOMPRESSION","tags":"cabin altitude decompression oxygen pressurization","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"SMOKE, FIRE OR FUMES","tags":"smoke fire fumes electrical odor","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"RUNAWAY STABILIZER","tags":"stabilizer trim runaway","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"UNRELIABLE AIRSPEED","tags":"airspeed disagree pitot unreliable","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"WINDSHEAR ESCAPE","tags":"windshear warning escape","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"GPWS ESCAPE","tags":"gpws terrain pull up escape","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"EMERGENCY EVACUATION","tags":"evacuation fire ground passengers","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]},{"title":"LOSS OF ALL GENERATORS","tags":"electrical generators power loss","entries":[{"type":"note","label":"QRH REQUIRED","lines":["Use the QRH and memory items issued by your school or operator.","Operational emergency steps are not stored in this first version."]},{"type":"item","name":"CONDITION AND INDICATIONS","action":"REVIEWED"},{"type":"item","name":"MEMORY ITEMS","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"REFERENCE CHECKLIST","action":"REVIEWED FROM ASSIGNED QRH"},{"type":"item","name":"CREW ROLES AND COMMUNICATION","action":"REVIEWED"},{"type":"item","name":"DIVERSION / LANDING CONSIDERATIONS","action":"REVIEWED"}]}]}};
+const STORAGE_KEY = "737ngTrainingChecklistV3";
 
+let currentView = "checklist";
+let searchQuery = "";
 let state = {
-  checks: {},
-  entries: {}
+  checks: {
+    checklist: {},
+    procedures: {},
+    emergencies: {}
+  },
+  entries: {
+    checklist: {},
+    procedures: {},
+    emergencies: {}
+  },
+  openSections: {
+    procedures: {},
+    emergencies: {}
+  }
 };
 
 try {
-  state = Object.assign(
-    state,
-    JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  state.checks = Object.assign(state.checks, saved.checks || {});
+  state.entries = Object.assign(state.entries, saved.entries || {});
+  state.openSections = Object.assign(
+    state.openSections,
+    saved.openSections || {}
   );
+  state.openSections.procedures =
+    state.openSections.procedures || {};
+  state.openSections.emergencies =
+    state.openSections.emergencies || {};
 } catch (error) {
-  console.warn("Could not restore checklist progress.", error);
+  console.warn("Could not restore saved progress.", error);
 }
 
-state.checks = state.checks || {};
-state.entries = state.entries || {};
-
-const checklist = CHECKLISTS.unified;
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
@@ -401,119 +511,263 @@ function escapeHtml(value) {
   })[character]);
 }
 
-function itemKey(sectionIndex, itemIndex) {
-  return `${sectionIndex}:${itemIndex}`;
+function itemKey(sectionIndex, entryIndex) {
+  return `${sectionIndex}:${entryIndex}`;
 }
 
-function progress() {
-  let total = 0;
-  let complete = 0;
-
-  checklist.sections.forEach((section, sectionIndex) => {
-    section.items.forEach((item, itemIndex) => {
-      total += 1;
-      if (state.checks[itemKey(sectionIndex, itemIndex)]) {
-        complete += 1;
+function viewItems(viewName) {
+  const items = [];
+  APP_DATA[viewName].sections.forEach((section, sectionIndex) => {
+    section.entries.forEach((entry, entryIndex) => {
+      if (entry.type === "item") {
+        items.push({
+          key: itemKey(sectionIndex, entryIndex),
+          entry
+        });
       }
     });
   });
+  return items;
+}
+
+function progressFor(viewName) {
+  const items = viewItems(viewName);
+  const complete = items.filter(item => {
+    return Boolean(state.checks[viewName][item.key]);
+  }).length;
 
   return {
-    total,
+    total: items.length,
     complete,
-    percent: total ? Math.round((complete / total) * 100) : 0
+    percent: items.length
+      ? Math.round((complete / items.length) * 100)
+      : 0
   };
 }
 
 function updateProgress() {
-  const value = progress();
-  $("#progressBar").style.width = `${value.percent}%`;
+  const progress = progressFor(currentView);
+  $("#progressBar").style.width = `${progress.percent}%`;
   $("#progressLabel").textContent =
-    `${value.complete} of ${value.total} complete`;
-  $("#progressPercent").textContent = `${value.percent}%`;
-  $("#topProgress").textContent = `${value.percent}%`;
+    `${progress.complete} of ${progress.total} complete`;
+  $("#progressPercent").textContent = `${progress.percent}%`;
+  $("#topProgress").textContent = `${progress.percent}%`;
 }
 
-function renderChecklist() {
-  $("#checklistRoot").innerHTML = checklist.sections
-    .map((section, sectionIndex) => {
-      const complete = section.items.filter((item, itemIndex) => {
-        return state.checks[itemKey(sectionIndex, itemIndex)];
-      }).length;
+function renderActions() {
+  const otherViews = ["checklist", "procedures", "emergencies"]
+    .filter(view => view !== currentView);
 
-      const items = section.items.map((item, itemIndex) => {
-        const key = itemKey(sectionIndex, itemIndex);
-        const checked = Boolean(state.checks[key]);
+  const label = {
+    checklist: "Checklist",
+    procedures: "Procedures",
+    emergencies: "Emergencies"
+  };
 
-        const fields = (item.fields || []).map((field, fieldIndex) => {
-          const entryKey = `${key}:field:${fieldIndex}`;
-          return `
-            <input
-              type="text"
-              data-entry="${escapeHtml(entryKey)}"
-              value="${escapeHtml(state.entries[entryKey] || "")}"
-              placeholder="${escapeHtml(field)}"
-              aria-label="${escapeHtml(field)}"
-            >
-          `;
-        }).join("");
+  $("#actions").innerHTML = `
+    <button class="btn primary" type="button" data-view="${otherViews[0]}">
+      ${label[otherViews[0]]}
+    </button>
+    <button class="btn primary" type="button" data-view="${otherViews[1]}">
+      ${label[otherViews[1]]}
+    </button>
+    <button class="btn danger" id="resetCurrent" type="button">
+      Reset
+    </button>
+  `;
 
-        return `
-          <div class="item ${checked ? "done" : ""}">
-            <input
-              class="check"
-              type="checkbox"
-              data-check="${escapeHtml(key)}"
-              ${checked ? "checked" : ""}
-              aria-label="Complete ${escapeHtml(item.name)}"
-            >
-
-            <div>
-              <div class="item-top">
-                <div class="item-name">${escapeHtml(item.name)}</div>
-                ${
-                  item.role
-                    ? `<span class="role">${escapeHtml(item.role)}</span>`
-                    : ""
-                }
-              </div>
-
-              <div class="item-action">${escapeHtml(item.action)}</div>
-
-              ${
-                fields
-                  ? `<div class="entry-grid">${fields}</div>`
-                  : ""
-              }
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      return `
-        <section class="section">
-          <button class="section-head" type="button">
-            <span>${escapeHtml(section.title)}</span>
-            <span class="section-count">${complete}/${section.items.length}</span>
-            <span class="chevron">⌄</span>
-          </button>
-
-          <div class="section-body">${items}</div>
-        </section>
-      `;
-    }).join("");
-
-  $$(".section-head").forEach(button => {
+  $$("[data-view]").forEach(button => {
     button.addEventListener("click", () => {
-      button.closest(".section").classList.toggle("collapsed");
+      currentView = button.dataset.view;
+      searchQuery = "";
+      window.scrollTo({ top: 0, behavior: "instant" });
+      render();
+    });
+  });
+
+  $("#resetCurrent").addEventListener("click", resetCurrentView);
+}
+
+function searchableText(section) {
+  const entryText = section.entries.map(entry => {
+    if (entry.type === "note") {
+      return `${entry.label || ""} ${(entry.lines || []).join(" ")}`;
+    }
+    return `${entry.name || ""} ${entry.action || ""} ${entry.role || ""}`;
+  }).join(" ");
+
+  return `${section.title || ""} ${section.tags || ""} ${entryText}`
+    .toLowerCase();
+}
+
+function filteredSections() {
+  const sections = APP_DATA[currentView].sections;
+
+  if (!APP_DATA[currentView].search || !searchQuery.trim()) {
+    return sections.map((section, index) => ({
+      section,
+      originalIndex: index
+    }));
+  }
+
+  const query = searchQuery.trim().toLowerCase();
+
+  return sections
+    .map((section, index) => ({
+      section,
+      originalIndex: index
+    }))
+    .filter(item => searchableText(item.section).includes(query));
+}
+
+function renderEntry(entry, sectionIndex, entryIndex) {
+  if (entry.type === "note") {
+    return `
+      <aside class="note">
+        <div class="note-label">${escapeHtml(entry.label || "NOTE")}</div>
+        ${(entry.lines || []).map(line => `
+          <div class="note-line">${escapeHtml(line)}</div>
+        `).join("")}
+      </aside>
+    `;
+  }
+
+  const key = itemKey(sectionIndex, entryIndex);
+  const checked = Boolean(state.checks[currentView][key]);
+
+  const fields = (entry.fields || []).map((field, fieldIndex) => {
+    const entryKey = `${key}:field:${fieldIndex}`;
+    return `
+      <input
+        type="text"
+        data-entry="${escapeHtml(entryKey)}"
+        value="${escapeHtml(state.entries[currentView][entryKey] || "")}"
+        placeholder="${escapeHtml(field)}"
+        aria-label="${escapeHtml(field)}"
+      >
+    `;
+  }).join("");
+
+  return `
+    <div class="item ${checked ? "done" : ""}">
+      <input
+        class="check"
+        type="checkbox"
+        data-check="${escapeHtml(key)}"
+        ${checked ? "checked" : ""}
+        aria-label="Complete ${escapeHtml(entry.name)}"
+      >
+
+      <div>
+        <div class="item-top">
+          <div class="item-name">${escapeHtml(entry.name)}</div>
+          ${
+            entry.role
+              ? `<span class="role">${escapeHtml(entry.role)}</span>`
+              : ""
+          }
+        </div>
+
+        <div class="item-action">${escapeHtml(entry.action)}</div>
+
+        ${
+          fields
+            ? `<div class="entry-grid">${fields}</div>`
+            : ""
+        }
+      </div>
+    </div>
+  `;
+}
+
+function renderScreen() {
+  const visible = filteredSections();
+
+  if (!visible.length) {
+    $("#screenRoot").innerHTML = `
+      <div class="empty">No matching items found.</div>
+    `;
+    return;
+  }
+
+  const menusAreCollapsible = currentView !== "checklist";
+  const searchIsActive =
+    Boolean(APP_DATA[currentView].search && searchQuery.trim());
+
+  $("#screenRoot").innerHTML = visible.map(({section, originalIndex}) => {
+    const items = section.entries
+      .map((entry, entryIndex) => ({entry, entryIndex}))
+      .filter(item => item.entry.type === "item");
+
+    const complete = items.filter(item => {
+      return Boolean(
+        state.checks[currentView][itemKey(originalIndex, item.entryIndex)]
+      );
+    }).length;
+
+    const storedOpen = menusAreCollapsible
+      ? Boolean(state.openSections[currentView][originalIndex])
+      : true;
+
+    const isOpen = !menusAreCollapsible || searchIsActive || storedOpen;
+    const collapsedClass =
+      menusAreCollapsible && !isOpen ? " collapsed" : "";
+
+    const heading = menusAreCollapsible
+      ? `
+        <button
+          class="section-head"
+          type="button"
+          data-toggle-section="${originalIndex}"
+          aria-expanded="${isOpen ? "true" : "false"}"
+        >
+          <span>${escapeHtml(section.title)}</span>
+          <span class="section-count">${complete}/${items.length}</span>
+          <span class="section-chevron" aria-hidden="true">⌄</span>
+        </button>
+      `
+      : `
+        <div class="section-head">
+          <span>${escapeHtml(section.title)}</span>
+          <span class="section-count">${complete}/${items.length}</span>
+        </div>
+      `;
+
+    return `
+      <section class="section${collapsedClass}">
+        ${heading}
+
+        <div class="section-body">
+          ${section.entries.map((entry, entryIndex) => {
+            return renderEntry(entry, originalIndex, entryIndex);
+          }).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+
+  $$("[data-toggle-section]").forEach(button => {
+    button.addEventListener("click", () => {
+      const sectionIndex = button.dataset.toggleSection;
+      const sectionElement = button.closest(".section");
+      const shouldOpen = sectionElement.classList.contains("collapsed");
+
+      sectionElement.classList.toggle("collapsed", !shouldOpen);
+      button.setAttribute(
+        "aria-expanded",
+        shouldOpen ? "true" : "false"
+      );
+
+      state.openSections[currentView][sectionIndex] = shouldOpen;
+      saveState();
     });
   });
 
   $$("[data-check]").forEach(checkbox => {
     checkbox.addEventListener("change", () => {
-      state.checks[checkbox.dataset.check] = checkbox.checked;
+      state.checks[currentView][checkbox.dataset.check] = checkbox.checked;
       saveState();
-      renderChecklist();
+      render();
     });
   });
 
@@ -529,49 +783,65 @@ function renderChecklist() {
       }
 
       checkbox.checked = !checkbox.checked;
-      state.checks[checkbox.dataset.check] = checkbox.checked;
+      state.checks[currentView][checkbox.dataset.check] = checkbox.checked;
       saveState();
-      renderChecklist();
+      render();
     });
   });
 
   $$("[data-entry]").forEach(input => {
     input.addEventListener("input", () => {
-      state.entries[input.dataset.entry] = input.value;
+      state.entries[currentView][input.dataset.entry] = input.value;
       saveState();
     });
   });
-
-  updateProgress();
 }
 
-$("#expandAll").addEventListener("click", () => {
-  $$("#checklistRoot .section").forEach(section => {
-    section.classList.remove("collapsed");
-  });
-});
+function resetCurrentView() {
+  const viewLabel = {
+    checklist: "checklist",
+    procedures: "procedures",
+    emergencies: "emergencies"
+  }[currentView];
 
-$("#collapseAll").addEventListener("click", () => {
-  $$("#checklistRoot .section").forEach(section => {
-    section.classList.add("collapsed");
-  });
-});
-
-$("#resetChecklist").addEventListener("click", () => {
-  if (!window.confirm("Reset all checklist progress and entered values?")) {
+  if (!window.confirm(`Reset all ${viewLabel} progress and entered values?`)) {
     return;
   }
 
-  state = {
-    checks: {},
-    entries: {}
-  };
-
+  state.checks[currentView] = {};
+  state.entries[currentView] = {};
   saveState();
-  renderChecklist();
+  render();
+}
+
+function render() {
+  const view = APP_DATA[currentView];
+
+  $("#brand").textContent = view.title;
+  renderActions();
+
+  const searchWrap = $("#searchWrap");
+  const searchInput = $("#searchInput");
+
+  if (view.search) {
+    searchWrap.classList.add("visible");
+    searchInput.placeholder = view.searchPlaceholder || "Search";
+    searchInput.value = searchQuery;
+  } else {
+    searchWrap.classList.remove("visible");
+    searchInput.value = "";
+  }
+
+  renderScreen();
+  updateProgress();
+}
+
+$("#searchInput").addEventListener("input", event => {
+  searchQuery = event.target.value;
+  renderScreen();
 });
 
-renderChecklist();
+render();
 </script>
 </body>
 </html>
